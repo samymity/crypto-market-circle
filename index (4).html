@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAA-C03 Questions with Exam Domains - Complete Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .card-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .card-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            width: 280px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            min-width: 140px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 10px;
+            line-height: 1.3;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.2s;
+        }
+        
+        .question-title {
+            max-width: 200px;
+            font-size: 9px;
+            line-height: 1.3;
+            text-align: left;
+            font-weight: 500;
+        }
+        
+        .service-list {
+            max-width: 100px;
+            font-size: 8px;
+            line-height: 1.2;
+            color: #666;
+        }
+        
+        /* Domain indicators */
+        .domain-tag {
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: bold;
+            color: white;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .domain-resilient { 
+            background: linear-gradient(135deg, #e74c3c, #c0392b); 
+        }
+        
+        .domain-performance { 
+            background: linear-gradient(135deg, #3498db, #2980b9); 
+        }
+        
+        .domain-secure { 
+            background: linear-gradient(135deg, #9b59b6, #8e44ad); 
+        }
+        
+        .domain-cost { 
+            background: linear-gradient(135deg, #f39c12, #e67e22); 
+        }
+        
+        /* Category colors */
+        .cat-storage { border-left: 4px solid #ff9800; }
+        .cat-database { border-left: 4px solid #2196f3; }
+        .cat-security { border-left: 4px solid #f44336; }
+        .cat-compute { border-left: 4px solid #4caf50; }
+        .cat-serverless { border-left: 4px solid #ffc107; }
+        .cat-networking { border-left: 4px solid #9c27b0; }
+        .cat-monitoring { border-left: 4px solid #009688; }
+        .cat-migration { border-left: 4px solid #e91e63; }
+        
+        /* Priority indicators */
+        .priority-high { color: #d32f2f; font-weight: bold; }
+        .priority-medium { color: #f57c00; font-weight: bold; }
+        .priority-low { color: #388e3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SAA-C03 Questions Analytics with Exam Domains</h1>
+        <p class="subtitle">Complete breakdown of all 65 questions mapped to AWS SAA-C03 exam objectives</p>
+        
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card" id="totalCard">
+                <div class="card-number">65</div>
+                <div class="card-label">Total Questions</div>
+            </div>
+            <div class="card" id="resilientCard">
+                <div class="card-number">0</div>
+                <div class="card-label">Resilient Architecture</div>
+            </div>
+            <div class="card" id="performanceCard">
+                <div class="card-number">0</div>
+                <div class="card-label">High-Performing</div>
+            </div>
+            <div class="card" id="secureCard">
+                <div class="card-number">0</div>
+                <div class="card-label">Secure Architecture</div>
+            </div>
+            <div class="card" id="costCard">
+                <div class="card-number">0</div>
+                <div class="card-label">Cost-Optimized</div>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filters">
+            <input type="text" class="search-box" placeholder="Search questions..." id="searchBox">
+            <select class="filter-select" id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="Storage">Storage & Data</option>
+                <option value="Database">Database</option>
+                <option value="Security">Security</option>
+                <option value="Compute">Compute</option>
+                <option value="Serverless">Serverless</option>
+                <option value="Networking">Networking</option>
+                <option value="Monitoring">Monitoring</option>
+                <option value="Migration">Migration</option>
+            </select>
+            <select class="filter-select" id="domainFilter">
+                <option value="">All Exam Domains</option>
+                <option value="Resilient">Resilient Architecture</option>
+                <option value="High-Performing">High-Performing</option>
+                <option value="Secure">Secure Architecture</option>
+                <option value="Cost-Optimized">Cost-Optimized</option>
+            </select>
+            <select class="filter-select" id="priorityFilter">
+                <option value="">All Priorities</option>
+                <option value="High">High Priority</option>
+                <option value="Medium">Medium Priority</option>
+            </select>
+        </div>
+        
+        <!-- Main Table -->
+        <table id="mainTable">
+            <thead>
+                <tr>
+                    <th>Q#</th>
+                    <th>Problem Statement</th>
+                    <th>Core Challenge</th>
+                    <th>AWS Solution</th>
+                    <th>Category</th>
+                    <th>Exam Domain</th>
+                    <th>Priority</th>
+                    <th>Key Concepts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="cat-storage" data-category="Storage" data-domain="Cost-Optimized" data-priority="High">
+                    <td><strong>Q1</strong></td>
+                    <td class="question-title">Web app global users, files 2+ years need cost-effective storage</td>
+                    <td>Data Lifecycle Management</td>
+                    <td>S3 Lifecycle Policies: Standard → IA → Glacier</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-cost">Cost-Optimized</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Storage classes, Cost optimization</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="High">
+                    <td><strong>Q2</strong></td>
+                    <td class="question-title">Crypto exchange needs detailed CPU/memory monitoring</td>
+                    <td>Deep Database Monitoring</td>
+                    <td>RDS Enhanced Monitoring</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Process monitoring, Performance insights</td>
+                </tr>
+                <tr class="cat-compute" data-category="Compute" data-domain="Resilient" data-priority="High">
+                    <td><strong>Q3</strong></td>
+                    <td class="question-title">App needs min 2 instances, scales to 6, HA fault-tolerant</td>
+                    <td>High Availability with Fault Tolerance</td>
+                    <td>Multi-AZ Auto Scaling: Min 4 (2 per AZ), Max 6</td>
+                    <td>Compute</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Multi-AZ, Minimum capacity</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q4</strong></td>
+                    <td class="question-title">Weather data 500GB each country fastest to Virginia</td>
+                    <td>Fast Data Transfer</td>
+                    <td>S3 Transfer Acceleration + Multipart Upload</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Global acceleration, Parallel upload</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="High">
+                    <td><strong>Q5</strong></td>
+                    <td class="question-title">Local cache low-latency + long-term archival SMB</td>
+                    <td>Hybrid Storage with Caching</td>
+                    <td>AWS Storage Gateway File Gateway + S3 Lifecycle</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Local cache, SMB protocol</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="High">
+                    <td><strong>Q6</strong></td>
+                    <td class="question-title">EKS cluster encrypt etcd sensitive data compliance</td>
+                    <td>Container Secret Encryption</td>
+                    <td>EKS Secret Encryption with AWS KMS</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Kubernetes secrets, KMS encryption</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="High">
+                    <td><strong>Q7</strong></td>
+                    <td class="question-title">Aurora read replica performance issues during peaks</td>
+                    <td>Database Read Scaling</td>
+                    <td>Aurora Auto Scaling for Read Replicas</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Read scaling, Performance optimization</td>
+                </tr>
+                <tr class="cat-compute" data-category="Compute" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q8</strong></td>
+                    <td class="question-title">CRM slow at 9AM but normal after hours</td>
+                    <td>Predictable Scaling</td>
+                    <td>Scheduled Auto Scaling Policy</td>
+                    <td>Compute</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Schedule-based, Known patterns</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q9</strong></td>
+                    <td class="question-title">Social network notify users when follows post</td>
+                    <td>Event-Driven Notifications</td>
+                    <td>DynamoDB Streams + Lambda + SNS</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Database streams, Fan-out messaging</td>
+                </tr>
+                <tr class="cat-migration" data-category="Migration" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q10</strong></td>
+                    <td class="question-title">.NET Oracle migration minimal development changes HA</td>
+                    <td>Lift-and-Shift Migration</td>
+                    <td>AWS DMS + Elastic Beanstalk Multi-AZ</td>
+                    <td>Migration</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Minimal code changes, HA database</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="Resilient" data-priority="High">
+                    <td><strong>Q11</strong></td>
+                    <td class="question-title">Single NAT Gateway creates failure point multi-AZ</td>
+                    <td>High Availability for Outbound Traffic</td>
+                    <td>NAT Gateway in Each AZ + Route Table Config</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-high">High</td>
+                    <td>AZ independence, Route table config</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q12</strong></td>
+                    <td class="question-title">S3 notifications to SQS for dev AND ops teams</td>
+                    <td>Message Fan-out Pattern</td>
+                    <td>SNS Topic with Multiple SQS Queue Subscriptions</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Message distribution, Event-driven</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q13</strong></td>
+                    <td class="question-title">Aurora trigger actions when car records deleted</td>
+                    <td>Database Trigger Integration</td>
+                    <td>Aurora Native Function/Stored Procedure + Lambda</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Stored procedures, Lambda integration</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="Cost-Optimized" data-priority="High">
+                    <td><strong>Q14</strong></td>
+                    <td class="question-title">Global company centralized AWS resource sharing</td>
+                    <td>Multi-Account Resource Sharing</td>
+                    <td>AWS Organizations + AWS Resource Access Manager</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-cost">Cost-Optimized</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Centralized management, Resource sharing</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="High">
+                    <td><strong>Q15</strong></td>
+                    <td class="question-title">S3 data accidentally deleted by junior engineer</td>
+                    <td>S3 Data Protection</td>
+                    <td>S3 Versioning + Multi-Factor Authentication Delete</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Version control, Multi-factor auth</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="High">
+                    <td><strong>Q16</strong></td>
+                    <td class="question-title">VPC under DDoS attacks need fortified defense</td>
+                    <td>DDoS Protection</td>
+                    <td>AWS Shield Advanced</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Network protection, Advanced threats</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="High">
+                    <td><strong>Q17</strong></td>
+                    <td class="question-title">Financial app RDS auth using EC2 instance profile</td>
+                    <td>Database Authentication Integration</td>
+                    <td>RDS IAM Database Authentication</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Token-based auth, IAM integration</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="Resilient" data-priority="High">
+                    <td><strong>Q18</strong></td>
+                    <td class="question-title">RDS single AZ experiencing outages</td>
+                    <td>Database High Availability</td>
+                    <td>RDS Multi-AZ Deployment</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Automatic failover, Synchronous replication</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q19</strong></td>
+                    <td class="question-title">S3 static website API calls browser blocks cross-origin</td>
+                    <td>Cross-Origin Resource Sharing</td>
+                    <td>S3 CORS Configuration</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Cross-origin requests, Browser security</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="High">
+                    <td><strong>Q20</strong></td>
+                    <td class="question-title">Medical S3 compliance mode 1 year no root access</td>
+                    <td>Compliance Storage</td>
+                    <td>S3 Object Lock Compliance Mode with Retention</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Write-once-read-many, Immutable storage</td>
+                </tr>
+                <tr class="cat-monitoring" data-category="Monitoring" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q21</strong></td>
+                    <td class="question-title">EC2 memory/disk utilization not in CloudWatch</td>
+                    <td>Custom System Monitoring</td>
+                    <td>Install CloudWatch Agent on EC2 Instances</td>
+                    <td>Monitoring</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>System-level metrics, Agent installation</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q22</strong></td>
+                    <td class="question-title">Query data across multiple AWS accounts data lake</td>
+                    <td>Cross-Account Data Access</td>
+                    <td>AWS Lake Formation</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Cross-account querying, Data governance</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q23</strong></td>
+                    <td class="question-title">Healthcare real-time data PII anonymization</td>
+                    <td>Streaming Data with Privacy</td>
+                    <td>Kinesis Data Streams + Lambda + DynamoDB</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Real-time data transformation, Privacy</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q24</strong></td>
+                    <td class="question-title">Government census S3 data PII compliance monitoring</td>
+                    <td>Data Privacy Compliance</td>
+                    <td>Amazon Macie</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>PII detection, Policy violations</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q25</strong></td>
+                    <td class="question-title">Travel photos hotlinked causing bandwidth theft</td>
+                    <td>Content Protection</td>
+                    <td>S3 Pre-signed URLs with Expiration</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Access control, Time-limited URLs</td>
+                </tr>
+                <tr class="cat-compute" data-category="Compute" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q26</strong></td>
+                    <td class="question-title">Auto Scaling default termination policy which instance</td>
+                    <td>Auto Scaling Termination Logic</td>
+                    <td>Instance from Oldest Launch Template</td>
+                    <td>Compute</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Instance termination, Default policies</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q27</strong></td>
+                    <td class="question-title">Forex trading Oracle migration urgent HA</td>
+                    <td>Database Migration with HA</td>
+                    <td>AWS DMS + RDS Multi-AZ</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Zero-downtime migration, High availability</td>
+                </tr>
+                <tr class="cat-monitoring" data-category="Monitoring" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q28</strong></td>
+                    <td class="question-title">EC2 memory utilization not available CloudWatch</td>
+                    <td>Custom Metric Collection</td>
+                    <td>Custom CloudWatch Metrics via Agent</td>
+                    <td>Monitoring</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Memory utilization, Custom metrics</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q29</strong></td>
+                    <td class="question-title">Aurora MySQL synchronous replication weather app</td>
+                    <td>Database Synchronous Replication</td>
+                    <td>RDS Multi-AZ Deployment</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Zero data loss, Automatic failover</td>
+                </tr>
+                <tr class="cat-compute" data-category="Compute" data-domain="Cost-Optimized" data-priority="Medium">
+                    <td><strong>Q30</strong></td>
+                    <td class="question-title">Fargate batch jobs S3 upload triggered scaling</td>
+                    <td>Event-Driven Container Scaling</td>
+                    <td>EventBridge Rule + ECS Task Target</td>
+                    <td>Compute</td>
+                    <td><span class="domain-tag domain-cost">Cost-Optimized</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Container scaling, Event triggers</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="High">
+                    <td><strong>Q31</strong></td>
+                    <td class="question-title">Full encryption key control immediate removal audit</td>
+                    <td>Maximum Key Control</td>
+                    <td>AWS KMS Custom Key Store + CloudHSM</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Hardware security, Key ownership</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q32</strong></td>
+                    <td class="question-title">Lambda MongoDB credentials environment variables secure</td>
+                    <td>Secrets Management</td>
+                    <td>Lambda Environment Variable Encryption with KMS</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Environment encryption, Developer security</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q33</strong></td>
+                    <td class="question-title">Windows file share migration IIS compatibility HA</td>
+                    <td>Windows File System Migration</td>
+                    <td>Amazon FSx for Windows File Server</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Windows compatibility, AD integration</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q34</strong></td>
+                    <td class="question-title">Corporate AD users AWS Console existing groups</td>
+                    <td>Active Directory Integration</td>
+                    <td>AD Connector + IAM Roles</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Active Directory, Single sign-on</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q35</strong></td>
+                    <td class="question-title">CloudFront multiple private files paying subscribers</td>
+                    <td>Bulk Private Content Access</td>
+                    <td>CloudFront Signed Cookies</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Bulk access, URL preservation</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q36</strong></td>
+                    <td class="question-title">High volume requests changing IP addresses</td>
+                    <td>Rate-Based Attack Mitigation</td>
+                    <td>AWS WAF Rate-Based Rule</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Attack mitigation, Legitimate traffic</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="Resilient" data-priority="High">
+                    <td><strong>Q37</strong></td>
+                    <td class="question-title">Multi-region 1-second RPO under 1-minute RTO</td>
+                    <td>Ultra-Fast Disaster Recovery</td>
+                    <td>Aurora Global Database</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Ultra-fast DR, Global replication</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q38</strong></td>
+                    <td class="question-title">DynamoDB workload distribution across partitions</td>
+                    <td>Database Partition Optimization</td>
+                    <td>High-Cardinality Partition Keys</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Load distribution, Partition design</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q39</strong></td>
+                    <td class="question-title">IPv6 outbound internet access prevent inbound</td>
+                    <td>IPv6 Outbound-Only Access</td>
+                    <td>Egress-Only Internet Gateway + AWS Network Firewall</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>IPv6 networking, Traffic filtering</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q40</strong></td>
+                    <td class="question-title">ElastiCache Redis MULTI EXEC authentication</td>
+                    <td>Redis Authentication</td>
+                    <td>Redis AUTH with auth-token Parameter</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Redis commands, Authentication tokens</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q41</strong></td>
+                    <td class="question-title">Multi-account firewall protect ALBs SQL injection</td>
+                    <td>Centralized Security Management</td>
+                    <td>AWS WAF + AWS Firewall Manager</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Cross-account protection, SQL injection</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q42</strong></td>
+                    <td class="question-title">Private subnet DynamoDB S3 without internet</td>
+                    <td>Private Cloud Connectivity</td>
+                    <td>VPC Endpoints for S3 and DynamoDB</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>VPC endpoints, Internet avoidance</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q43</strong></td>
+                    <td class="question-title">Auto-scaled EC2 shared file access EBS slow</td>
+                    <td>Shared File System</td>
+                    <td>Amazon EFS</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Multi-instance access, POSIX compliance</td>
+                </tr>
+                <tr class="cat-monitoring" data-category="Monitoring" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q44</strong></td>
+                    <td class="question-title">CloudFormation IAM policy S3 permissions analysis</td>
+                    <td>IAM Policy Interpretation</td>
+                    <td>IAM Policy allows: Read all S3, Write specific bucket</td>
+                    <td>Monitoring</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Permission interpretation, Security audit</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q45</strong></td>
+                    <td class="question-title">Cryptocurrency API sudden traffic spikes</td>
+                    <td>API Traffic Surge Protection</td>
+                    <td>API Gateway Throttling + Result Caching</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Traffic management, Backend protection</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q46</strong></td>
+                    <td class="question-title">Windows Server trading HA block storage multi-AZ</td>
+                    <td>Cross-AZ Block Storage</td>
+                    <td>Amazon FSx for NetApp ONTAP Multi-AZ with iSCSI</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>High-performance, Cross-AZ access</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Cost-Optimized" data-priority="Medium">
+                    <td><strong>Q47</strong></td>
+                    <td class="question-title">Mission-critical persistent storage 30-day archival</td>
+                    <td>Storage Lifecycle with Performance</td>
+                    <td>Amazon EBS + S3 with Lifecycle Policy to Glacier</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-cost">Cost-Optimized</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Block storage, Automated archival</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q48</strong></td>
+                    <td class="question-title">API Gateway Lambda protect traffic spikes</td>
+                    <td>Serverless Traffic Management</td>
+                    <td>API Gateway Throttling Limits</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Traffic control, Automatic scaling</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q49</strong></td>
+                    <td class="question-title">ML high-performance parallel plus cold storage</td>
+                    <td>High-Performance + Archival Storage</td>
+                    <td>Amazon FSx for Lustre + Amazon S3</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>High-performance parallel, Cost archival</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="High">
+                    <td><strong>Q50</strong></td>
+                    <td class="question-title">Medical PII client-side encryption master keys</td>
+                    <td>Maximum Data Privacy</td>
+                    <td>S3 Client-Side Encryption with Client-Side Master Key</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Client-side encryption, Key ownership</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q51</strong></td>
+                    <td class="question-title">1200 employees single sign-on S3 individual folders</td>
+                    <td>Enterprise Identity Federation</td>
+                    <td>SAML 2.0 Federation + STS + IAM Roles</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Large-scale identity, Temporary tokens</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q52</strong></td>
+                    <td class="question-title">EC2 SSH access restricted single IP address</td>
+                    <td>Precise Network Access Control</td>
+                    <td>Security Group Inbound Rule: TCP/22 from /32</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Precise IP restrictions, SSH security</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q53</strong></td>
+                    <td class="question-title">Startup trading app burst traffic global API</td>
+                    <td>Serverless Burst Handling</td>
+                    <td>API Gateway + Lambda (auto-scaling)</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Instant scaling, Worldwide distribution</td>
+                </tr>
+                <tr class="cat-database" data-category="Database" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q54</strong></td>
+                    <td class="question-title">Aurora cluster route production high-capacity reporting low</td>
+                    <td>Database Workload Routing</td>
+                    <td>Aurora Custom Endpoints</td>
+                    <td>Database</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Capacity-based routing, Performance optimization</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q55</strong></td>
+                    <td class="question-title">DevOps accidentally deleted S3 file prevent future</td>
+                    <td>S3 Deletion Protection</td>
+                    <td>S3 Versioning + MFA Delete</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Accidental deletion, Version control</td>
+                </tr>
+                <tr class="cat-compute" data-category="Compute" data-domain="Cost-Optimized" data-priority="Medium">
+                    <td><strong>Q56</strong></td>
+                    <td class="question-title">Auto Scaling over-provisioning cost-effective scaling</td>
+                    <td>Intelligent Cost Optimization</td>
+                    <td>Target Tracking Scaling Policy</td>
+                    <td>Compute</td>
+                    <td><span class="domain-tag domain-cost">Cost-Optimized</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Demand-based, Performance maintenance</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q57</strong></td>
+                    <td class="question-title">Government tax VPC-restricted write-once compliance</td>
+                    <td>Compliant Secure Storage</td>
+                    <td>S3 Access Points + Object Lock with Legal Hold</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>VPC restriction, Immutable storage</td>
+                </tr>
+                <tr class="cat-networking" data-category="Networking" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q58</strong></td>
+                    <td class="question-title">Company directory 1200 employees S3 AD/LDAP</td>
+                    <td>Directory Service Integration</td>
+                    <td>Federation Proxy + STS + IAM Policy</td>
+                    <td>Networking</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Corporate directory, S3 folder access</td>
+                </tr>
+                <tr class="cat-security" data-category="Security" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q59</strong></td>
+                    <td class="question-title">EC2 SSH access limited one specific IP security group</td>
+                    <td>Granular Network Security</td>
+                    <td>Security Group: Protocol TCP, Port 22, Source IP/32</td>
+                    <td>Security</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Granular network security</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q60</strong></td>
+                    <td class="question-title">Trading API low activity massive bursts global</td>
+                    <td>Global Serverless Scaling</td>
+                    <td>API Gateway + Lambda Global Distribution</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Global serverless APIs</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="High">
+                    <td><strong>Q61</strong></td>
+                    <td class="question-title">2GB CSV files hourly automated Parquet conversion</td>
+                    <td>Data Processing Pipeline</td>
+                    <td>AWS Glue ETL + S3 Event Notifications + SQS</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-high">High</td>
+                    <td>Automated ETL, Event-driven pipeline</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q62</strong></td>
+                    <td class="question-title">Microsoft SharePoint migration Windows AD integration</td>
+                    <td>Windows File System Migration</td>
+                    <td>Amazon FSx for Windows File Server with AD Integration</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>File system preservation, AD compatibility</td>
+                </tr>
+                <tr class="cat-serverless" data-category="Serverless" data-domain="High-Performing" data-priority="Medium">
+                    <td><strong>Q63</strong></td>
+                    <td class="question-title">CloudFront users slow login HTTP 504 errors</td>
+                    <td>Global Performance Optimization</td>
+                    <td>Lambda@Edge + Origin Failover Groups</td>
+                    <td>Serverless</td>
+                    <td><span class="domain-tag domain-performance">High-Performing</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Edge processing, Reliability improvement</td>
+                </tr>
+                <tr class="cat-monitoring" data-category="Monitoring" data-domain="Secure" data-priority="Medium">
+                    <td><strong>Q64</strong></td>
+                    <td class="question-title">Audit team compliance documents security reports</td>
+                    <td>Compliance Documentation Access</td>
+                    <td>AWS Artifact</td>
+                    <td>Monitoring</td>
+                    <td><span class="domain-tag domain-secure">Secure</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>Audit documentation, Regulatory reports</td>
+                </tr>
+                <tr class="cat-storage" data-category="Storage" data-domain="Resilient" data-priority="Medium">
+                    <td><strong>Q65</strong></td>
+                    <td class="question-title">SFTP file transfer encryption HA auto-deletion</td>
+                    <td>Secure File Transfer with Lifecycle</td>
+                    <td>AWS Transfer for SFTP + S3 Lifecycle Rules</td>
+                    <td>Storage</td>
+                    <td><span class="domain-tag domain-resilient">Resilient</span></td>
+                    <td class="priority-medium">Medium</td>
+                    <td>File transfer protocol, Automated cleanup</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <script>
+            // Calculate and display correct domain counts on page load
+            function updateDomainCounts() {
+                const rows = document.querySelectorAll('#mainTable tbody tr');
+                let resilientCount = 0;
+                let performanceCount = 0;
+                let secureCount = 0;
+                let costCount = 0;
+                
+                rows.forEach(row => {
+                    const domain = row.getAttribute('data-domain') || '';
+                    if (domain === 'Resilient') resilientCount++;
+                    else if (domain === 'High-Performing') performanceCount++;
+                    else if (domain === 'Secure') secureCount++;
+                    else if (domain === 'Cost-Optimized') costCount++;
+                });
+                
+                // Update the summary cards
+                document.querySelector('#resilientCard .card-number').textContent = resilientCount;
+                document.querySelector('#performanceCard .card-number').textContent = performanceCount;
+                document.querySelector('#secureCard .card-number').textContent = secureCount;
+                document.querySelector('#costCard .card-number').textContent = costCount;
+            }
+            
+            // Search and filter functionality
+            document.getElementById('searchBox').addEventListener('input', filterTable);
+            document.getElementById('categoryFilter').addEventListener('change', filterTable);
+            document.getElementById('domainFilter').addEventListener('change', filterTable);
+            document.getElementById('priorityFilter').addEventListener('change', filterTable);
+            
+            function filterTable() {
+                const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+                const categoryFilter = document.getElementById('categoryFilter').value;
+                const domainFilter = document.getElementById('domainFilter').value;
+                const priorityFilter = document.getElementById('priorityFilter').value;
+                
+                const rows = document.querySelectorAll('#mainTable tbody tr');
+                let visibleCount = 0;
+                let visibleResilient = 0;
+                let visiblePerformance = 0;
+                let visibleSecure = 0;
+                let visibleCost = 0;
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    const category = row.getAttribute('data-category') || '';
+                    const domain = row.getAttribute('data-domain') || '';
+                    const priority = row.getAttribute('data-priority') || '';
+                    
+                    const matchesSearch = !searchTerm || text.includes(searchTerm);
+                    const matchesCategory = !categoryFilter || category.includes(categoryFilter);
+                    const matchesDomain = !domainFilter || domain.includes(domainFilter);
+                    const matchesPriority = !priorityFilter || priority.includes(priorityFilter);
+                    
+                    if (matchesSearch && matchesCategory && matchesDomain && matchesPriority) {
+                        row.style.display = '';
+                        visibleCount++;
+                        // Count by domain for filtered results
+                        if (domain === 'Resilient') visibleResilient++;
+                        else if (domain === 'High-Performing') visiblePerformance++;
+                        else if (domain === 'Secure') visibleSecure++;
+                        else if (domain === 'Cost-Optimized') visibleCost++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+                
+                // Update summary cards with filtered or total counts
+                if (searchTerm || categoryFilter || domainFilter || priorityFilter) {
+                    // Show filtered counts
+                    document.querySelector('#totalCard .card-number').textContent = visibleCount;
+                    document.querySelector('#totalCard .card-label').textContent = `of 65 Questions`;
+                    document.querySelector('#resilientCard .card-number').textContent = visibleResilient;
+                    document.querySelector('#performanceCard .card-number').textContent = visiblePerformance;
+                    document.querySelector('#secureCard .card-number').textContent = visibleSecure;
+                    document.querySelector('#costCard .card-number').textContent = visibleCost;
+                } else {
+                    // Show total counts
+                    document.querySelector('#totalCard .card-number').textContent = '65';
+                    document.querySelector('#totalCard .card-label').textContent = 'Total Questions';
+                    updateDomainCounts(); // Reset to original counts
+                }
+            }
+            
+            // Initialize counts on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                updateDomainCounts();
+            });
+        </script>
+    </div>
+</body>
+</html>
