@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Solutions Architect Associate - Exam Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .category-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .category-card:hover::before {
+            left: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .custom-table {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .custom-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .custom-table tbody tr {
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+            transition: all 0.2s ease;
+        }
+        
+        .custom-table tbody tr:hover {
+            background: rgba(102, 126, 234, 0.08);
+            transform: scale(1.005);
+        }
+        
+        .priority-high {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .priority-medium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .cat-storage { border-left: 4px solid #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.15); }
+        .cat-database { border-left: 4px solid #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
+        .cat-security { border-left: 4px solid #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.15); }
+        .cat-compute { border-left: 4px solid #6366f1; box-shadow: 0 0 20px rgba(99, 102, 241, 0.15); }
+        .cat-serverless { border-left: 4px solid #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.15); }
+        .cat-network { border-left: 4px solid #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.15); }
+        .cat-monitoring { border-left: 4px solid #f97316; box-shadow: 0 0 20px rgba(249, 115, 22, 0.15); }
+        .cat-migration { border-left: 4px solid #64748b; box-shadow: 0 0 20px rgba(100, 116, 139, 0.15); }
+        
+        select, button {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            color: #1e293b;
+            transition: all 0.3s ease;
+        }
+        
+        select:hover, select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+        
+        button {
+            background: rgba(241, 245, 249, 0.95);
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.8);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="container mx-auto max-w-7xl">
+        
+        <header class="mb-8 text-center">
+            <div class="gradient-bg inline-block px-8 py-4 rounded-2xl mb-4">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white">
+                    AWS SAA Exam Analysis
+                </h1>
+            </div>
+            <p class="text-lg text-slate-700 mt-2">
+                Questions 1-65 | Solutions Architect Associate Certification
+            </p>
+        </header>
+
+        <div class="glass-card p-6 rounded-2xl mb-8">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="w-2 h-8 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full mr-3"></span>
+                Study Metrics Dashboard
+            </h3>
+
+            <div class="mb-6">
+                <p class="text-sm font-semibold text-slate-600 uppercase mb-3 tracking-wider">Category Focus</p>
+                <div id="categoryBreakdown" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+                    <div class="category-card p-4 rounded-xl text-center cat-storage" data-category="Storage">
+                        <div class="text-4xl font-bold text-orange-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Storage</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-database" data-category="Database">
+                        <div class="text-4xl font-bold text-green-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Database</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-security" data-category="Security">
+                        <div class="text-4xl font-bold text-red-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Security</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-compute" data-category="Compute">
+                        <div class="text-4xl font-bold text-indigo-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Compute</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-serverless" data-category="Serverless">
+                        <div class="text-4xl font-bold text-purple-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Serverless</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-network" data-category="Network">
+                        <div class="text-4xl font-bold text-blue-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Network</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-monitoring" data-category="Monitoring">
+                        <div class="text-4xl font-bold text-orange-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Monitoring</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center cat-migration" data-category="Migration">
+                        <div class="text-4xl font-bold text-slate-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Migration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <p class="text-sm font-semibold text-slate-600 uppercase mb-3 tracking-wider">Architectural Domain</p>
+                <div id="domainBreakdown" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="category-card p-4 rounded-xl text-center" style="border-left: 4px solid #dc2626;" data-domain="Design Secure Architectures">
+                        <div class="text-4xl font-bold text-red-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Secure</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center" style="border-left: 4px solid #a855f7;" data-domain="Design High-Performing Architectures">
+                        <div class="text-4xl font-bold text-purple-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">High-Performing</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center" style="border-left: 4px solid #10b981;" data-domain="Design Resilient Architectures">
+                        <div class="text-4xl font-bold text-green-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Resilient</div>
+                    </div>
+                    <div class="category-card p-4 rounded-xl text-center" style="border-left: 4px solid #f59e0b;" data-domain="Design Cost-Optimized Architectures">
+                        <div class="text-4xl font-bold text-orange-600 mb-1" data-count="0">0</div>
+                        <div class="text-xs text-slate-600 uppercase tracking-wide">Cost-Optimized</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="totalSummary" class="gradient-bg text-white p-4 rounded-xl text-center font-bold mt-6 text-lg">
+                Displaying 65 of 65 questions
+            </div>
+        </div>
+        
+        <div class="glass-card p-6 rounded-2xl mb-8">
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Filter Questions</h3>
+            <div class="flex flex-wrap gap-4 items-end">
+                <div class="flex-1 min-w-[150px]">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Category</label>
+                    <select id="categoryFilter" onchange="filterTable()" class="w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Categories</option>
+                        <option value="Storage">Storage</option>
+                        <option value="Database">Database</option>
+                        <option value="Security">Security</option>
+                        <option value="Compute">Compute</option>
+                        <option value="Serverless">Serverless</option>
+                        <option value="Network">Network</option>
+                        <option value="Monitoring">Monitoring</option>
+                        <option value="Migration">Migration</option>
+                    </select>
+                </div>
+
+                <div class="flex-1 min-w-[150px]">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Exam Domain</label>
+                    <select id="domainFilter" onchange="filterTable()" class="w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Domains</option>
+                        <option value="Design Secure Architectures">Design Secure Architectures</option>
+                        <option value="Design High-Performing Architectures">Design High-Performing Architectures</option>
+                        <option value="Design Resilient Architectures">Design Resilient Architectures</option>
+                        <option value="Design Cost-Optimized Architectures">Design Cost-Optimized Architectures</option>
+                    </select>
+                </div>
+
+                <div class="flex-1 min-w-[150px]">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Priority</label>
+                    <select id="priorityFilter" onchange="filterTable()" class="w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Priorities</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                    </select>
+                </div>
+
+                <button onclick="resetFilters()" class="px-6 py-3 font-semibold rounded-lg transition duration-300">
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+
+        <div class="glass-card rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+                <table id="questionTable" class="custom-table min-w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Q#</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Problem</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Challenge</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Solution</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Category</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Domain</th>
+                            <th class="px-4 py-4 text-center text-xs font-bold uppercase tracking-wider text-white">Priority</th>
+                            <th class="px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-white">Concepts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer class="mt-8 text-center text-slate-600 text-sm">
+            <p>AWS Solutions Architect Associate (SAA-C03) Study Guide</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const data = [
+            [1,"Company needs to assess and audit AWS configurations, track S3 bucket changes, and identify publicly accessible buckets","Compliance monitoring, configuration tracking, automated security assessment","<strong>AWS Config</strong> with rules to enforce ideal configurations and evaluate compliance against internal guidelines","Security","Design Secure Architectures","High","Config Rules, Compliance Auditing, S3 Security"],
+            [2,"Data center surveillance system needs AI-powered unauthorized personnel detection with SMS alerts","Real-time video processing, facial/object recognition, alert notification system","<strong>Amazon Kinesis Video Streams</strong> for video ingestion + <strong>Amazon Rekognition</strong> for AI detection + <strong>Amazon SNS</strong> for SMS alerts","Serverless","Design High-Performing Architectures","Medium","Video Streaming, Computer Vision, Event-Driven Architecture"],
+            [3,"Process semi-structured/structured data in S3 data lake using big data frameworks and SQL queries for BI tools","Big data processing, high-performance analytics, SQL query support for large datasets","<strong>Amazon EMR</strong> cluster for big data processing + <strong>Amazon Redshift</strong> for data warehousing and SQL analytics","Database","Design High-Performing Architectures","High","ETL, Data Warehousing, Big Data Frameworks"],
+            [4,"GraphQL API in EKS needs private network access to DynamoDB (no internet traversal) plus cross-account backup","Private networking between VPC and DynamoDB, cross-account disaster recovery, network security","<strong>DynamoDB Gateway Endpoint</strong> for private connectivity + <strong>AWS Backup</strong> for cross-account DynamoDB backup automation","Network","Design Secure Architectures","High","VPC Endpoints, Gateway Endpoint, Cross-Account Backup"],
+            [5,"Forex trading app needs Auto Scaling with cooldown period to prevent unintended scaling during traffic spikes","Controlled scaling behavior, preventing premature scale-in/out, stability during load changes","<strong>Auto Scaling cooldown period</strong> (default 300 seconds) prevents launching/terminating instances before previous scaling completes","Compute","Design Resilient Architectures","Medium","Auto Scaling, Cooldown Period, Scaling Policies"],
+            [6,"Music app needs key-value store for document models (band ID, album ID, song ID, composer ID, lyrics)","NoSQL database for flexible schema, key-value storage, scalability for document models","<strong>Amazon DynamoDB</strong> table supporting both document and key-value store models with automatic scaling","Database","Design Resilient Architectures","High","NoSQL, Key-Value Store, DynamoDB"],
+            [7,"Meal planning app on EC2 needs secure access to S3 and other AWS services without embedded credentials","Secure credential management, avoiding hardcoded API keys, temporary credentials for EC2","Create <strong>IAM Role</strong> and assign to EC2 instance for temporary security credentials via instance metadata","Security","Design Secure Architectures","High","IAM Roles, Instance Profiles, Temporary Credentials"],
+            [8,"Startup needs multi-account setup with centralized directory service authentication for simplified login","Multi-account management, centralized authentication, directory service integration, SSO","<strong>AWS Organizations</strong> for multi-account structure + <strong>AWS IAM Identity Center</strong> (SSO) integrated with directory service via AD Connector","Security","Design Secure Architectures","High","AWS Organizations, IAM Identity Center, AD Connector"],
+            [9,"Large archive data (250 TB) in S3 needs monitoring for unauthorized access and suspicious patterns","Threat detection, anomaly detection for S3 access, automated security alerts","<strong>Amazon GuardDuty</strong> for continuous monitoring using machine learning to detect malicious activity and suspicious S3 access patterns","Security","Design Secure Architectures","Medium","Threat Detection, GuardDuty, S3 Protection"],
+            [10,"Three-tier website (ALB, EC2 Auto Scaling, Aurora) needs layered security with web filtering and malicious URL blocking","Defense-in-depth strategy, network segmentation, web filtering, FQDN blacklisting","Deploy <strong>AWS Network Firewall</strong> with stateful rules for URL filtering and FQDN blocking, route VPC traffic through firewall endpoints","Network","Design Secure Architectures","High","Network Firewall, Defense-in-Depth, IPS/IDS"],
+            [11,"Healthcare company must encrypt and rotate database credentials, API keys for HIPAA compliance in S3 backups","Secrets management, automatic rotation, encryption at rest, secure credential storage","<strong>AWS Secrets Manager</strong> to store/encrypt credentials with automatic rotation enabled, accessed via API calls instead of hardcoding","Security","Design Secure Architectures","High","Secrets Manager, Credential Rotation, AES-256 Encryption"],
+            [12,"Two EC2 instances in same VPC but different subnets need to communicate (one runs database, one runs web app)","VPC internal communication, subnet routing, security group configuration","Configure <strong>Security Groups</strong> to allow app-to-database traffic on correct port/protocol + verify <strong>Network ACL</strong> allows subnet communication","Network","Design Secure Architectures","Medium","Security Groups, NACLs, VPC Routing"],
+            [13,"Start-up needs durable storage for financial reports with global distribution to clients worldwide","Cost-effective scalable storage, global content delivery, low latency access","<strong>Amazon S3</strong> for durable data storage + <strong>Amazon CloudFront</strong> CDN for fast global content delivery with edge caching","Storage","Design Cost-Optimized Architectures","High","S3 Durability, CloudFront CDN, Edge Locations"],
+            [14,"ECS batch architecture needs queue for image processing workflow with S3 input/output buckets","Decoupled architecture, message queuing, batch processing coordination","<strong>Amazon SQS</strong> queue for message passing + <strong>IAM Role</strong> (taskRoleArn) for ECS tasks to access S3 and SQS securely","Serverless","Design High-Performing Architectures","High","SQS, ECS Task Roles, Decoupling"],
+            [15,"Insurance company needs message filtering to route quote requests to separate SQS queues by type (within 24 hours)","Message routing, content-based filtering, parallel processing across multiple queues","<strong>Amazon SNS</strong> topic with filter policies in subscriptions to fan out messages to designated <strong>SQS queues</strong> based on attributes","Serverless","Design High-Performing Architectures","Medium","SNS Filter Policies, Fan-out Pattern, Message Routing"],
+            [16,"Spot EC2 instance in private subnet needs high availability - resume traffic flow if primary instance terminates","Network interface portability, rapid failover, maintaining private IP connectivity","Create secondary <strong>Elastic Network Interface (ENI)</strong> with private IP mapped to domain, move ENI to standby instance upon failure","Network","Design Resilient Architectures","Medium","ENI, Network Interface Attachment, Failover"],
+            [17,"VPC-1 and VPC-2 are peered; need fault-tolerant connection from on-premises to VPC-1 via Direct Connect","Redundant connectivity, VPN backup, Direct Connect resilience, edge-to-edge routing limitations","Establish another <strong>Direct Connect connection</strong> + create <strong>hardware VPN over Internet</strong> as backup to VPC-1 (cannot extend through VPC-2 peering)","Network","Design Secure Architectures","High","Direct Connect, VPN Backup, VPC Peering Limitations"],
+            [18,"Migrate containerized apps to AWS using open-source, cloud-agnostic platform with standardized configs across environments","Cloud portability, open-source requirement, container orchestration, vendor lock-in avoidance","<strong>Amazon EKS</strong> (Elastic Kubernetes Service) with EKS worker nodes - Kubernetes is open-source and cloud-agnostic unlike proprietary ECS","Compute","Design High-Performing Architectures","High","Kubernetes, EKS, Cloud-Agnostic, Container Orchestration"],
+            [19,"Web app behind ALB needs DDoS protection and mitigation - detect/block malicious traffic and suspicious patterns","DDoS mitigation, rate limiting, web application firewall, malicious IP blocking","<strong>Amazon CloudFront</strong> with ALB origin + <strong>AWS WAF</strong> rate-based rules to automatically block malicious IPs and stop attacks","Security","Design Secure Architectures","High","AWS WAF, Rate-Based Rules, DDoS Protection, Shield"],
+            [20,"Multi-tier web app needs Application Load Balancer supporting path-based, host-based routing and gRPC bi-directional streaming","Advanced routing capabilities, gRPC protocol support, Layer 7 load balancing","<strong>Application Load Balancer</strong> with gRPC protocol version selected - supports HTTP/2, advanced routing, and gRPC natively","Network","Design Resilient Architectures","Medium","ALB, gRPC, Layer 7 Routing, HTTP/2"],
+            [21,"Company needs cost-effective, durable storage for infrequently accessed disaster recovery backups that must be retrieved within 12 hours","Long-term archival, cost optimization, flexible retrieval times, durability","<strong>S3 Glacier Flexible Retrieval</strong> for cost savings, with expedited or standard retrieval options to meet the 12-hour RTO","Storage","Design Cost-Optimized Architectures","High","S3 Storage Classes, Glacier Flexible Retrieval, RTO/RPO"],
+            [22,"A serverless API needs to manage concurrent requests while maintaining low latency and automatically scaling in response to traffic without managing underlying servers","Serverless compute, auto-scaling, low operational overhead, high concurrency handling","<strong>Amazon API Gateway</strong> with <strong>AWS Lambda</strong> integration (Lambda Proxy) to handle request routing and execution serverlessly","Serverless","Design High-Performing Architectures","High","Serverless, Lambda, API Gateway, Auto Scaling"],
+            [23,"EC2 instances are failing health checks due to high CPU load during peak hours. The solution must automatically adjust capacity to meet demand cost-effectively","Elasticity, automatic capacity adjustment, high availability, cost efficiency","Configure an <strong>Auto Scaling Group</strong> with a <strong>Target Tracking Scaling Policy</strong> based on average CPU Utilization, scaling out to handle peak load","Compute","Design Resilient Architectures","High","Horizontal Scaling, Auto Scaling Group, Target Tracking Policy, Elasticity"],
+            [24,"A global application needs to direct users to the nearest regional endpoint with the lowest latency while providing automatic failover if an endpoint becomes unhealthy","Global traffic management, latency-based routing, automatic health checks, multi-region failover","<strong>Amazon Route 53</strong> with <strong>Latency Routing Policy</strong> combined with <strong>Health Checks</strong> for automatic failover to the healthy region","Network","Design Resilient Architectures","High","Route 53, Latency Routing, Health Checks, Failover"],
+            [25,"Developer wants to rapidly deploy a full-stack web application (frontend, backend, database) with minimal configuration and centralized CI/CD","Simplified deployment, full-stack hosting, integrated CI/CD pipeline, rapid iteration","<strong>AWS Amplify</strong> for hosting the frontend and managing the serverless backend resources (Lambda, DynamoDB) with built-in CI/CD","Serverless","Design High-Performing Architectures","Medium","AWS Amplify, CI/CD, Full-Stack Deployment, Serverless"],
+            [26,"Sensitive audit logs from multiple accounts must be consolidated into a central, secure S3 bucket that prevents accidental deletion or modification","Centralized logging, immutability, cross-account access control, data protection","Configure S3 on the central bucket with <strong>MFA Delete</strong> enabled + use a <strong>Bucket Policy</strong> to allow write-only access from other accounts + enable <strong>S3 Object Lock</strong> in Governance mode","Security","Design Secure Architectures","High","S3 Object Lock, MFA Delete, Cross-Account Logging, S3 Bucket Policy"],
+            [27,"Company needs to run a highly coupled, high-performance computing (HPC) workload that requires ultra-low latency, non-routable network communication between EC2 instances","High-performance networking, low latency, tightly coupled cluster communication","Place the EC2 instances in a <strong>Cluster Placement Group</strong> in the same Availability Zone, utilizing <strong>Elastic Fabric Adapter (EFA)</strong> for HPC","Compute","Design High-Performing Architectures","High","Cluster Placement Group, EFA, HPC, Network Latency"],
+            [28,"IoT fleet needs a managed message broker that supports MQTT protocol for device communication and can scale to millions of connected devices","IoT communication, managed MQTT broker, high scalability, device security","<strong>AWS IoT Core</strong> acts as the managed message broker, supporting MQTT and securely handling bi-directional communication with millions of devices","Serverless","Design High-Performing Architectures","Medium","IoT Core, MQTT, Device Shadow, Scalability"],
+            [29,"A new compliance requirement dictates that all EC2 data volumes must be encrypted at rest, including existing unencrypted EBS volumes","Data encryption at rest, mandatory encryption enforcement, migration of existing data","Enable <strong>EBS Encryption by Default</strong> in the region + create a <strong>new, encrypted EBS volume</strong> from a snapshot of the unencrypted volume, then attach the new volume to the EC2 instance","Security","Design Secure Architectures","High","EBS Encryption, KMS, Encryption by Default, Snapshotting"],
+            [30,"A globally distributed team needs a shared file system accessible via the NFS protocol that automatically scales and is highly available across multiple Availability Zones","Shared file storage, NFS protocol support, fully managed service, multi-AZ availability, automatic scaling","<strong>Amazon Elastic File System (EFS)</strong> for a scalable, shared file system accessible via NFS, with regional storage classes providing multi-AZ durability","Storage","Design Resilient Architectures","High","EFS, NFS, Shared File System, Multi-AZ, Scalability"],
+            [31,"Need highly available, shared block storage for two EC2 instances accessing the same data concurrently","Concurrent block access, high availability, performance storage","Use <strong>EBS Multi-Attach</strong> for block access from up to 16 Nitro instances in the same AZ, or consider <strong>Amazon FSx for NetApp ONTAP</strong> for multi-AZ, multi-protocol block storage","Storage","Design Resilient Architectures","High","EBS Multi-Attach, Shared Block Storage, FSx for ONTAP"],
+            [32,"Application needs to accept large incoming files (100GB+) over HTTPS from global partners and process them asynchronously","Large file ingress, secure transfer, decoupling","Generate <strong>S3 Pre-Signed URLs</strong> allowing partners to upload directly to an S3 Bucket, triggering a <strong>Lambda</strong> function for asynchronous processing","Serverless","Design High-Performing Architectures","High","S3 Pre-Signed URLs, S3 Direct Upload, Lambda, Decoupling"],
+            [33,"Web service running on EC2 needs performance scaling based on network requests/second (RPS) rather than just CPU usage","Custom scaling metrics, application-layer metrics","Publish RPS metric to <strong>Amazon CloudWatch</strong> using the agent, then use a <strong>Target Tracking Scaling Policy</strong> on the Auto Scaling Group based on that custom metric","Monitoring","Design High-Performing Architectures","Medium","CloudWatch Custom Metrics, Auto Scaling Policies, RPS"],
+            [34,"Need to securely access resources in a private subnet (EC2) from the internet for administrative tasks without assigning a public IP","Secure remote administration, bastion host replacement, private network access","Use <strong>AWS Systems Manager Session Manager</strong> (SSM), which provides secure, audited access via the console or CLI, avoiding open inbound security groups","Security","Design Secure Architectures","High","Systems Manager, Session Manager, IAM Permissions, No SSH Keys"],
+            [35,"Must encrypt RDS database backups at rest using a customer-managed key and retain full control over key rotation and policies","Custom key management, compliance, encryption control","Encrypt the <strong>Amazon RDS</strong> instance using an <strong>AWS Key Management Service (KMS)</strong> Customer Managed Key (CMK) during creation","Security","Design Secure Architectures","High","KMS, Customer Managed Keys, RDS Encryption, Compliance"],
+            [36,"Need a highly scalable caching layer for an application using DynamoDB to reduce read latency and read costs","Read performance optimization, highly available caching, non-relational data caching","Deploy <strong>Amazon DynamoDB Accelerator (DAX)</strong> in front of the DynamoDB table. DAX provides microsecond read performance for read-intensive workloads","Database","Design High-Performing Architectures","High","DAX, Caching, DynamoDB, Read Consistency"],
+            [37,"Migrate a virtual machine from an on-premises data center directly into an Amazon EC2 instance with minimal downtime and effort","VM migration, P2V/V2V conversion, simplified import process","Use <strong>AWS Application Migration Service (MGN)</strong>, which automates the replication and conversion of physical, virtual, and cloud servers to EC2","Migration","Design High-Performing Architectures","Medium","MGN, VM Migration, Lift-and-Shift, Replication"],
+            [38,"Need to establish a direct, private, high-bandwidth connection between an on-premises corporate network and a single AWS VPC","Dedicated private connectivity, guaranteed throughput, reduced latency","Use <strong>AWS Direct Connect</strong> established at an AWS Direct Connect location to bypass the public internet and provide dedicated capacity","Network","Design High-Performing Architectures","High","Direct Connect, Private Connectivity, VPC Connectivity"],
+            [39,"A S3 object needs immediate, automatic replication to a different AWS Region for disaster recovery purposes","Cross-region redundancy, automated replication, high RPO/RTO goals","Configure <strong>S3 Cross-Region Replication (CRR)</strong> on the source bucket, ensuring versioning is enabled on both the source and destination","Storage","Design Resilient Architectures","High","S3 CRR, S3 Versioning, Disaster Recovery, RPO"],
+            [40,"Need to visualize and track cost allocation across different departments (Dev, Test, Prod) within a single AWS Account","Cost management, resource tagging, budget tracking","Use <strong>Cost Allocation Tags</strong> (user-defined tags like Department or Environment) and activate them in the Billing console to analyze spending in <strong>Cost Explorer</strong>","Monitoring","Design Cost-Optimized Architectures","High","Cost Allocation Tags, Cost Explorer, Cost Optimization"],
+            [41,"Large amounts of data must be ingested from on-premises to S3 via VPN/Direct Connect securely and efficiently without managing custom code","Large data transfer, managed service, security, high throughput","Use <strong>AWS DataSync</strong> to manage and accelerate the transfer of data from on-premises file systems directly to S3 over Direct Connect or VPN","Migration","Design High-Performing Architectures","High","DataSync, S3, Data Transfer, Agent"],
+            [42,"Need to offload read-heavy SQL queries from a highly transactional relational database (RDS) to improve performance and reduce latency","Database read performance, latency reduction, query offloading","Deploy an <strong>Amazon ElastiCache for Redis</strong> cluster and implement <strong>Read-Through/Write-Through caching</strong> to store query results and session data","Database","Design High-Performing Architectures","High","ElastiCache Redis, Read Replication, Caching Strategy"],
+            [43,"Lambda functions in a VPC need to access the internet to fetch updates, but still need to remain in private subnets for security","Internet access from private subnet, security isolation","Route Lambda traffic through a <strong>NAT Gateway</strong> deployed in a public subnet. Configure the private subnet's route table to direct 0.0.0.0/0 traffic to the NAT Gateway","Serverless","Design Secure Architectures","High","NAT Gateway, Private Subnets, Lambda Networking"],
+            [44,"Need to ensure continuous deployment to EC2 instances across multiple regions while maintaining state and managing rollback options","Multi-region deployment, state management, blue/green capability","Use <strong>AWS CodeDeploy</strong> for automated deployments across regions, integrating with <strong>CodePipeline</strong> for a continuous delivery workflow with built-in rollback health checks","Compute","Design Resilient Architectures","Medium","CodeDeploy, Blue/Green Deployment, Rollback"],
+            [45,"Need highly durable, regional object storage that supports immutability (WORM) for regulated medical records for a retention period of 7 years","WORM compliance, long-term durability, regulatory requirements","Use <strong>S3 Standard</strong> or <strong>S3 Intelligent-Tiering</strong> with <strong>S3 Object Lock</strong> enabled in <strong>Compliance mode</strong> for the 7-year retention period","Storage","Design Secure Architectures","High","S3 Object Lock, Compliance Mode, WORM, Data Retention"],
+            [46,"Need a mechanism to automatically track, record, and respond to unauthorized API calls made by IAM users or roles within the account","Audit logging, threat response, API activity tracking","Use <strong>AWS CloudTrail</strong> to log all API calls. Configure a <strong>CloudWatch Event Rule (or EventBridge)</strong> to monitor specific Deny or Unauthorized CloudTrail events and trigger an <strong>SNS</strong> notification or <strong>Lambda</strong> function","Monitoring","Design Secure Architectures","High","CloudTrail, EventBridge, CloudWatch Events, API Monitoring"],
+            [47,"A traditional corporate ERP system running on Windows needs a storage solution that uses the SMB protocol and is durable and highly available","SMB file sharing, managed Windows file system, high availability","Deploy <strong>Amazon FSx for Windows File Server</strong> in a Multi-AZ deployment. This supports the SMB protocol and integrates natively with Microsoft Active Directory","Storage","Design Resilient Architectures","Medium","FSx for Windows, SMB Protocol, Multi-AZ"],
+            [48,"Need to run scheduled, intermittent batch jobs (e.g., nightly report generation) that can scale up instantly and are billed per execution without maintaining persistent servers","Scheduled tasks, serverless execution, cost-optimized, elastic scaling","Use <strong>Amazon EventBridge (CloudWatch Events)</strong> to trigger an <strong>AWS Batch</strong> job or a container running on <strong>AWS Fargate</strong> (if containerized) on a defined schedule","Serverless","Design Cost-Optimized Architectures","High","EventBridge, AWS Batch, Fargate, Scheduled Tasks"],
+            [49,"Need to optimize network performance for a web application running across multiple regions by dynamically routing user traffic to the best-performing endpoint based on real-time application health","Global traffic optimization, non-DNS routing, continuous performance monitoring","Deploy <strong>AWS Global Accelerator</strong> and route traffic to the Application Load Balancers (ALBs) in each region. Global Accelerator uses the AWS global network backbone and directs traffic based on application health and closest edge location","Network","Design High-Performing Architectures","High","Global Accelerator, Anycast IP, AWS Backbone, Performance Routing"],
+            [50,"Database needs to be migrated from an on-premises Oracle instance to Amazon Aurora MySQL with minimal downtime and continuous data replication during the transition phase","Homogeneous database migration (Relational), minimal downtime, continuous replication","Use <strong>AWS Database Migration Service (DMS)</strong> with <strong>Continuous Replication (CDC)</strong> enabled to stream changes from the source Oracle database to the target Aurora database","Migration","Design High-Performing Architectures","High","DMS, CDC, Homogeneous Migration, Aurora"],
+            [51,"Relational database requires automatic failover to a standby instance in a different Availability Zone with minimal recovery time in case of primary instance failure","High availability, automatic failover, minimal RTO","Deploy <strong>Amazon RDS</strong> with <strong>Multi-AZ Deployment</strong> enabled. This automatically creates a synchronous standby replica in another AZ for fast failover","Database","Design Resilient Architectures","High","RDS Multi-AZ, Synchronous Replication, Automatic Failover"],
+            [52,"Need to run large-scale, non-critical, fault-tolerant batch processing jobs at the lowest possible cost, scaling up and down based on queue depth","Cost optimization, fault-tolerance, temporary capacity","Configure an <strong>Auto Scaling Group</strong> with a <strong>Spot Fleet</strong> of EC2 instances, using a <strong>Step Scaling Policy</strong> triggered by the depth of an SQS queue","Compute","Design Cost-Optimized Architectures","High","EC2 Spot Instances, Spot Fleet, SQS, Auto Scaling"],
+            [53,"HPC application needs a parallel file system that provides massive throughput, high IOPS, and low latency access for shared datasets","Massive parallel throughput, low latency file access, shared storage","Deploy <strong>Amazon FSx for Lustre</strong>, a high-performance file system optimized for fast processing of datasets for HPC workloads","Storage","Design High-Performing Architectures","Medium","FSx for Lustre, HPC, Parallel File System, Throughput"],
+            [54,"Need to ingest and analyze thousands of social media posts per second in real-time, then push aggregated metrics to a dashboard","Real-time data ingestion, stream analytics, low latency dashboarding","Use <strong>Amazon Kinesis Data Streams</strong> for ingestion, <strong>Kinesis Data Analytics</strong> with SQL queries for real-time processing, and <strong>CloudWatch</strong> for visualization","Serverless","Design High-Performing Architectures","High","Kinesis Data Streams, Kinesis Data Analytics, Real-Time Processing"],
+            [55,"Web application behind an Application Load Balancer needs protection against common web exploits like SQL injection and cross-site scripting (XSS)","Web application firewall, Layer 7 threat mitigation, managed security rules","Deploy <strong>AWS WAF</strong> (Web Application Firewall) and associate it with the ALB, using managed rule groups for common threats","Security","Design Secure Architectures","High","AWS WAF, Managed Rule Groups, Layer 7 Protection, SQLi, XSS"],
+            [56,"Need a redundant and cost-effective backup connectivity solution for an existing primary Direct Connect link between on-premises and AWS","Network redundancy, cost-effective backup, hybrid cloud resilience","Implement a <strong>Site-to-Site VPN Connection</strong> over the public internet to serve as a failover backup for the primary <strong>Direct Connect</strong> link","Network","Design Resilient Architectures","High","Direct Connect Redundancy, Site-to-Site VPN, Failover"],
+            [57,"Audit logs are sent to CloudWatch Logs, but must be retained for 7 years for compliance purposes at the lowest possible cost","Long-term log retention, cost-optimized archiving","Create a <strong>CloudWatch Logs Subscription Filter</strong> to automatically stream logs to an <strong>S3 Bucket</strong>, configuring a <strong>Lifecycle Policy</strong> to transition data to <strong>S3 Glacier Deep Archive</strong>","Monitoring","Design Cost-Optimized Architectures","Medium","CloudWatch Logs, S3 Subscription, Glacier Deep Archive"],
+            [58,"Enterprise has 20 VPCs across multiple AWS accounts in the same region that need centralized, high-speed, scalable connectivity between them","Centralized network management, large-scale VPC connectivity","Deploy an <strong>AWS Transit Gateway (TGW)</strong> and centralize all VPC attachments and routing. This avoids complex mesh-like VPC peering connections","Network","Design High-Performing Architectures","High","Transit Gateway, VPC Peering Limitations, Hub-and-Spoke"],
+            [59,"Migrate an on-premises Microsoft SQL Server database to Amazon Aurora PostgreSQL-Compatible Edition with minimal data transformation manually","Heterogeneous database migration, schema conversion, minimal downtime","Use the <strong>AWS Schema Conversion Tool (SCT)</strong> for schema conversion and the <strong>AWS Database Migration Service (DMS)</strong> for continuous data replication","Migration","Design High-Performing Architectures","Medium","DMS, SCT, Heterogeneous Migration, Aurora"],
+            [60,"Need to improve read performance for a relational database experiencing heavy load from frequently accessed, static dataset queries","Read latency reduction, scaling read capacity, high-speed cache","Add one or more <strong>Amazon RDS Read Replicas</strong> in different AZs to distribute read traffic and improve query performance","Database","Design High-Performing Architectures","High","RDS Read Replicas, Asynchronous Replication, Read Scaling"],
+            [61,"To reduce storage costs, S3 objects that have not been accessed for 30 days should automatically be moved to a lower-cost tier","Automated cost optimization, tiered storage, data lifecycle management","Configure an <strong>S3 Lifecycle Policy</strong> to transition objects older than 30 days from S3 Standard to <strong>S3 Standard-IA</strong> or <strong>S3 Intelligent-Tiering</strong>","Storage","Design Cost-Optimized Architectures","High","S3 Lifecycle Policies, S3 Standard-IA, Intelligent-Tiering"],
+            [62,"EC2 instances in a private subnet must securely access S3 buckets without traversing the public internet or using a NAT Gateway","Private, secure connectivity to AWS services, avoiding public IP/internet costs","Create an <strong>S3 Gateway VPC Endpoint</strong> and attach it to the VPC's route table to allow private traffic from the EC2 instances to S3","Network","Design Secure Architectures","High","Gateway VPC Endpoint, Interface VPC Endpoint, Private Connectivity"],
+            [63,"Company commits to a consistent baseline of EC2 usage for the next year and needs the greatest cost savings on those instances regardless of instance family or region","Deepest discount, flexibility across EC2 instance types and regions","Purchase an <strong>EC2 Instance Savings Plan</strong> for the committed compute usage (e.g., $10/hour). This provides the most flexibility and highest savings compared to RIs","Compute","Design Cost-Optimized Architectures","High","Savings Plans, Reserved Instances, Compute Cost Optimization"],
+            [64,"Two EC2 instances in the same public subnet need to communicate privately over a specific port, ensuring all other traffic is denied by default","Instance-level stateful traffic filtering, least privilege","Use <strong>Security Groups</strong> attached to both instances, allowing inbound traffic on the required port from the Security Group ID itself (Source: sg-xxxxx), which is stateful","Security","Design Secure Architectures","Medium","Security Groups, Stateful Filtering, Self-Referencing SG"],
+            [65,"Need to coordinate a complex, multi-step application workflow involving sequential Lambda functions, conditional branching, and automatic retries","Orchestration, workflow management, conditional logic, error handling","Implement the workflow using <strong>AWS Step Functions</strong>, which provides a visual state machine to coordinate multiple serverless components, handle retries, and branching logic","Serverless","Design Resilient Architectures","Medium","Step Functions, State Machine, Orchestration, Lambda"]
+        ];
+
+        const tbody = document.getElementById('tableBody');
+        const categoryMap = {};
+        const domainMap = {};
+        
+        document.querySelectorAll('#categoryBreakdown > div').forEach(card => {
+            categoryMap[card.dataset.category] = card.querySelector('[data-count]');
+        });
+        
+        document.querySelectorAll('#domainBreakdown > div').forEach(card => {
+            domainMap[card.dataset.domain] = card.querySelector('[data-count]');
+        });
+
+        data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="px-4 py-4 whitespace-nowrap text-sm font-bold text-purple-600">${row[0]}</td>
+                <td class="px-4 py-4 text-sm text-slate-700 max-w-xs">${row[1]}</td>
+                <td class="px-4 py-4 text-sm text-slate-600 max-w-xs">${row[2]}</td>
+                <td class="px-4 py-4 text-sm text-indigo-700 max-w-xs">${row[3]}</td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-700" data-filter="category" data-value="${row[4]}">${row[4]}</td>
+                <td class="px-4 py-4 whitespace-nowrap text-sm text-slate-700" data-filter="domain" data-value="${row[5]}">${row[5]}</td>
+                <td class="px-4 py-4 whitespace-nowrap text-center" data-filter="priority" data-value="${row[6]}">
+                    <span class="priority-${row[6].toLowerCase()}">${row[6]}</span>
+                </td>
+                <td class="px-4 py-4 text-xs text-slate-600 max-w-xs">${row[7]}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        function filterTable() {
+            const catFilter = document.getElementById('categoryFilter').value;
+            const domFilter = document.getElementById('domainFilter').value;
+            const priFilter = document.getElementById('priorityFilter').value;
+            
+            const rows = tbody.querySelectorAll('tr');
+            const catCounts = {};
+            const domCounts = {};
+            let visible = 0;
+            
+            Object.keys(categoryMap).forEach(k => catCounts[k] = 0);
+            Object.keys(domainMap).forEach(k => domCounts[k] = 0);
+            
+            rows.forEach(row => {
+                const cat = row.querySelector('[data-filter="category"]').dataset.value;
+                const dom = row.querySelector('[data-filter="domain"]').dataset.value;
+                const pri = row.querySelector('[data-filter="priority"]').dataset.value;
+                
+                const matchCat = catFilter === 'all' || cat === catFilter;
+                const matchDom = domFilter === 'all' || dom === domFilter;
+                const matchPri = priFilter === 'all' || pri === priFilter;
+                
+                if (matchCat && matchDom && matchPri) {
+                    row.style.display = '';
+                    visible++;
+                    catCounts[cat]++;
+                    domCounts[dom]++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            Object.entries(catCounts).forEach(([cat, count]) => {
+                if (categoryMap[cat]) categoryMap[cat].textContent = count;
+            });
+            
+            Object.entries(domCounts).forEach(([dom, count]) => {
+                if (domainMap[dom]) domainMap[dom].textContent = count;
+            });
+            
+            document.getElementById('totalSummary').textContent = `Displaying ${visible} of ${data.length} questions`;
+        }
+
+        function resetFilters() {
+            document.getElementById('categoryFilter').value = 'all';
+            document.getElementById('domainFilter').value = 'all';
+            document.getElementById('priorityFilter').value = 'all';
+            filterTable();
+        }
+
+        window.filterTable = filterTable;
+        window.resetFilters = resetFilters;
+        
+        filterTable();
+    </script>
+</body>
+</html>
