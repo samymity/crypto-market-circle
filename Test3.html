@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS SAA-C03 Study Dashboard - Test3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #e2e8f0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+            animation: headerGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes headerGlow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 20px 80px rgba(139, 92, 246, 0.5); }
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #f0abfc;
+            font-weight: 400;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #d946ef);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.4);
+            border-color: rgba(99, 102, 241, 0.6);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6366f1, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .filters-section {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .filters-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f0abfc;
+            margin-bottom: 20px;
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:hover, select:focus {
+            border-color: #8b5cf6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        select option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        .table-wrapper {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(99, 102, 241, 0.15);
+            transform: scale(1.01);
+        }
+
+        td {
+            padding: 14px 12px;
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .question-num {
+            font-weight: 800;
+            font-size: 16px;
+            background: linear-gradient(135deg, #6366f1, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .priority-high {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .priority-medium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .domain-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .domain-secure {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+
+        .domain-performance {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            color: #d8b4fe;
+        }
+
+        .domain-resilient {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            color: #86efac;
+        }
+
+        .domain-cost {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: #f59e0b;
+            color: #fcd34d;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(99, 102, 241, 0.3);
+            color: #c7d2fe;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 8px 6px;
+            }
+        }
+
+        .scroll-hint {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AWS SAA-C03 Study Dashboard</h1>
+            <p class="subtitle">Solutions Architect Associate Certification - Practice Questions Analysis</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalQuestions">65</div>
+                <div class="stat-label">Total Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="secureCount">0</div>
+                <div class="stat-label">Secure Architectures</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="performanceCount">0</div>
+                <div class="stat-label">High-Performing</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="resilientCount">0</div>
+                <div class="stat-label">Resilient Architectures</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="costCount">0</div>
+                <div class="stat-label">Cost-Optimized</div>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <div class="filters-title">Filter Questions</div>
+            <div class="filters-grid">
+                <select id="categoryFilter" onchange="applyFilters()">
+                    <option value="all">All Categories</option>
+                    <option value="Storage">Storage</option>
+                    <option value="Database">Database</option>
+                    <option value="Security">Security</option>
+                    <option value="Compute">Compute</option>
+                    <option value="Serverless">Serverless</option>
+                    <option value="Network">Network</option>
+                    <option value="Monitoring">Monitoring</option>
+                    <option value="Migration">Migration</option>
+                </select>
+                <select id="domainFilter" onchange="applyFilters()">
+                    <option value="all">All Domains</option>
+                    <option value="Design Secure Architectures">Design Secure Architectures</option>
+                    <option value="Design High-Performing Architectures">Design High-Performing Architectures</option>
+                    <option value="Design Resilient Architectures">Design Resilient Architectures</option>
+                    <option value="Design Cost-Optimized Architectures">Design Cost-Optimized Architectures</option>
+                </select>
+                <select id="priorityFilter" onchange="applyFilters()">
+                    <option value="all">All Priorities</option>
+                    <option value="High">High Priority</option>
+                    <option value="Medium">Medium Priority</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">Q#</th>
+                        <th>Problem Statement</th>
+                        <th>Core Challenge</th>
+                        <th>AWS Solution</th>
+                        <th style="width: 100px;">Category</th>
+                        <th style="width: 150px;">Domain</th>
+                        <th style="width: 100px; text-align: center;">Priority</th>
+                    </tr>
+                </thead>
+                <tbody id="questionsTable">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="scroll-hint">Scroll horizontally on mobile devices to view all columns</div>
+    </div>
+
+    <script>
+        const questions = [
+            {q: 1, problem: "Company needs to assess and audit AWS configurations, track S3 bucket changes, and identify publicly accessible buckets", challenge: "Compliance monitoring, configuration tracking, automated security assessment", solution: "AWS Config with rules to enforce ideal configurations and evaluate compliance against internal guidelines", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 2, problem: "Data center surveillance system needs AI-powered unauthorized personnel detection with SMS alerts", challenge: "Real-time video processing, facial/object recognition, alert notification system", solution: "Amazon Kinesis Video Streams for video ingestion + Amazon Rekognition for AI detection + Amazon SNS for SMS alerts", category: "Serverless", domain: "Design High-Performing Architectures", priority: "Medium"},
+            {q: 3, problem: "Process semi-structured/structured data in S3 data lake using big data frameworks and SQL queries for BI tools", challenge: "Big data processing, high-performance analytics, SQL query support for large datasets", solution: "Amazon EMR cluster for big data processing + Amazon Redshift for data warehousing and SQL analytics", category: "Database", domain: "Design High-Performing Architectures", priority: "High"},
+            {q: 4, problem: "GraphQL API in EKS needs private network access to DynamoDB (no internet traversal) plus cross-account backup", challenge: "Private networking between VPC and DynamoDB, cross-account disaster recovery, network security", solution: "DynamoDB Gateway Endpoint for private connectivity + AWS Backup for cross-account DynamoDB backup automation", category: "Network", domain: "Design Secure Architectures", priority: "High"},
+            {q: 5, problem: "Forex trading app needs Auto Scaling with cooldown period to prevent unintended scaling during traffic spikes", challenge: "Controlled scaling behavior, preventing premature scale-in/out, stability during load changes", solution: "Auto Scaling cooldown period (default 300 seconds) prevents launching/terminating instances before previous scaling completes", category: "Compute", domain: "Design Resilient Architectures", priority: "Medium"},
+            {q: 6, problem: "Music app needs key-value store for document models (band ID, album ID, song ID, composer ID, lyrics)", challenge: "NoSQL database for flexible schema, key-value storage, scalability for document models", solution: "Amazon DynamoDB table supporting both document and key-value store models with automatic scaling", category: "Database", domain: "Design Resilient Architectures", priority: "High"},
+            {q: 7, problem: "Meal planning app on EC2 needs secure access to S3 and other AWS services without embedded credentials", challenge: "Secure credential management, avoiding hardcoded API keys, temporary credentials for EC2", solution: "Create IAM Role and assign to EC2 instance for temporary security credentials via instance metadata", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 8, problem: "Startup needs multi-account setup with centralized directory service authentication for simplified login", challenge: "Multi-account management, centralized authentication, directory service integration, SSO", solution: "AWS Organizations for multi-account structure + AWS IAM Identity Center (SSO) integrated with directory service via AD Connector", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 9, problem: "Large archive data (250 TB) in S3 needs monitoring for unauthorized access and suspicious patterns", challenge: "Threat detection, anomaly detection for S3 access, automated security alerts", solution: "Amazon GuardDuty for continuous monitoring using machine learning to detect malicious activity and suspicious S3 access patterns", category: "Security", domain: "Design Secure Architectures", priority: "Medium"},
+            {q: 10, problem: "Three-tier website (ALB, EC2 Auto Scaling, Aurora) needs layered security with web filtering and malicious URL blocking", challenge: "Defense-in-depth strategy, network segmentation, web filtering, FQDN blacklisting", solution: "Deploy AWS Network Firewall with stateful rules for URL filtering and FQDN blocking, route VPC traffic through firewall endpoints", category: "Network", domain: "Design Secure Architectures", priority: "High"},
+            {q: 11, problem: "Healthcare company must encrypt and rotate database credentials, API keys for HIPAA compliance in S3 backups", challenge: "Secrets management, automatic rotation, encryption at rest, secure credential storage", solution: "AWS Secrets Manager to store/encrypt credentials with automatic rotation enabled, accessed via API calls instead of hardcoding", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 12, problem: "Two EC2 instances in same VPC but different subnets need to communicate (one runs database, one runs web app)", challenge: "VPC internal communication, subnet routing, security group configuration", solution: "Configure Security Groups to allow app-to-database traffic on correct port/protocol + verify Network ACL allows subnet communication", category: "Network", domain: "Design Secure Architectures", priority: "Medium"},
+            {q: 13, problem: "Start-up needs durable storage for financial reports with global distribution to clients worldwide", challenge: "Cost-effective scalable storage, global content delivery, low latency access", solution: "Amazon S3 for durable data storage + Amazon CloudFront CDN for fast global content delivery with edge caching", category: "Storage", domain: "Design Cost-Optimized Architectures", priority: "High"},
+            {q: 14, problem: "ECS batch architecture needs queue for image processing workflow with S3 input/output buckets", challenge: "Decoupled architecture, message queuing, batch processing coordination", solution: "Amazon SQS queue for message passing + IAM Role (taskRoleArn) for ECS tasks to access S3 and SQS securely", category: "Serverless", domain: "Design High-Performing Architectures", priority: "High"},
+            {q: 15, problem: "Insurance company needs message filtering to route quote requests to separate SQS queues by type (within 24 hours)", challenge: "Message routing, content-based filtering, parallel processing across multiple queues", solution: "Amazon SNS topic with filter policies in subscriptions to fan out messages to designated SQS queues based on attributes", category: "Serverless", domain: "Design High-Performing Architectures", priority: "Medium"},
+            {q: 16, problem: "Spot EC2 instance in private subnet needs high availability - resume traffic flow if primary instance terminates", challenge: "Network interface portability, rapid failover, maintaining private IP connectivity", solution: "Create secondary Elastic Network Interface (ENI) with private IP mapped to domain, move ENI to standby instance upon failure", category: "Network", domain: "Design Resilient Architectures", priority: "Medium"},
+            {q: 17, problem: "VPC-1 and VPC-2 are peered; need fault-tolerant connection from on-premises to VPC-1 via Direct Connect", challenge: "Redundant connectivity, VPN backup, Direct Connect resilience, edge-to-edge routing limitations", solution: "Establish another Direct Connect connection + create hardware VPN over Internet as backup to VPC-1 (cannot extend through VPC-2 peering)", category: "Network", domain: "Design Secure Architectures", priority: "High"},
+            {q: 18, problem: "Migrate containerized apps to AWS using open-source, cloud-agnostic platform with standardized configs across environments", challenge: "Cloud portability, open-source requirement, container orchestration, vendor lock-in avoidance", solution: "Amazon EKS (Elastic Kubernetes Service) with EKS worker nodes - Kubernetes is open-source and cloud-agnostic unlike proprietary ECS", category: "Compute", domain: "Design High-Performing Architectures", priority: "High"},
+            {q: 19, problem: "Web app behind ALB needs DDoS protection and mitigation - detect/block malicious traffic and suspicious patterns", challenge: "DDoS mitigation, rate limiting, web application firewall, malicious IP blocking", solution: "Amazon CloudFront with ALB origin + AWS WAF rate-based rules to automatically block malicious IPs and stop attacks", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 20, problem: "Multi-tier web app needs Application Load Balancer supporting path-based, host-based routing and gRPC bi-directional streaming", challenge: "Advanced routing capabilities, gRPC protocol support, Layer 7 load balancing", solution: "Application Load Balancer with gRPC protocol version selected - supports HTTP/2, advanced routing, and gRPC natively", category: "Network", domain: "Design Resilient Architectures", priority: "Medium"},
+            {q: 21, problem: "Company needs cost-effective, durable storage for infrequently accessed disaster recovery backups that must be retrieved within 12 hours", challenge: "Long-term archival, cost optimization, flexible retrieval times, durability", solution: "S3 Glacier Flexible Retrieval for cost savings, with expedited or standard retrieval options to meet the 12-hour RTO", category: "Storage", domain: "Design Cost-Optimized Architectures", priority: "High"},
+            {q: 22, problem: "A serverless API needs to manage concurrent requests while maintaining low latency and automatically scaling in response to traffic without managing underlying servers", challenge: "Serverless compute, auto-scaling, low operational overhead, high concurrency handling", solution: "Amazon API Gateway with AWS Lambda integration (Lambda Proxy) to handle request routing and execution serverlessly", category: "Serverless", domain: "Design High-Performing Architectures", priority: "High"},
+            {q: 23, problem: "EC2 instances are failing health checks due to high CPU load during peak hours. The solution must automatically adjust capacity to meet demand cost-effectively", challenge: "Elasticity, automatic capacity adjustment, high availability, cost efficiency", solution: "Configure an Auto Scaling Group with a Target Tracking Scaling Policy based on average CPU Utilization, scaling out to handle peak load", category: "Compute", domain: "Design Resilient Architectures", priority: "High"},
+            {q: 24, problem: "A global application needs to direct users to the nearest regional endpoint with the lowest latency while providing automatic failover if an endpoint becomes unhealthy", challenge: "Global traffic management, latency-based routing, automatic health checks, multi-region failover", solution: "Amazon Route 53 with Latency Routing Policy combined with Health Checks for automatic failover to the healthy region", category: "Network", domain: "Design Resilient Architectures", priority: "High"},
+            {q: 25, problem: "Developer wants to rapidly deploy a full-stack web application (frontend, backend, database) with minimal configuration and centralized CI/CD", challenge: "Simplified deployment, full-stack hosting, integrated CI/CD pipeline, rapid iteration", solution: "AWS Amplify for hosting the frontend and managing the serverless backend resources (Lambda, DynamoDB) with built-in CI/CD", category: "Serverless", domain: "Design High-Performing Architectures", priority: "Medium"},
+            {q: 26, problem: "Sensitive audit logs from multiple accounts must be consolidated into a central, secure S3 bucket that prevents accidental deletion or modification", challenge: "Centralized logging, immutability, cross-account access control, data protection", solution: "Configure S3 on the central bucket with MFA Delete enabled + use a Bucket Policy to allow write-only access from other accounts + enable S3 Object Lock in Governance mode", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 27, problem: "Company needs to run a highly coupled, high-performance computing (HPC) workload that requires ultra-low latency, non-routable network communication between EC2 instances", challenge: "High-performance networking, low latency, tightly coupled cluster communication", solution: "Place the EC2 instances in a Cluster Placement Group in the same Availability Zone, utilizing Elastic Fabric Adapter (EFA) for HPC", category: "Compute", domain: "Design High-Performing Architectures", priority: "High"},
+            {q: 28, problem: "IoT fleet needs a managed message broker that supports MQTT protocol for device communication and can scale to millions of connected devices", challenge: "IoT communication, managed MQTT broker, high scalability, device security", solution: "AWS IoT Core acts as the managed message broker, supporting MQTT and securely handling bi-directional communication with millions of devices", category: "Serverless", domain: "Design High-Performing Architectures", priority: "Medium"},
+            {q: 29, problem: "A new compliance requirement dictates that all EC2 data volumes must be encrypted at rest, including existing unencrypted EBS volumes", challenge: "Data encryption at rest, mandatory encryption enforcement, migration of existing data", solution: "Enable EBS Encryption by Default in the region + create a new, encrypted EBS volume from a snapshot of the unencrypted volume, then attach the new volume to the EC2 instance", category: "Security", domain: "Design Secure Architectures", priority: "High"},
+            {q: 30, problem: "A globally distributed team needs a shared file system accessible via the NFS protocol that automatically scales and is highly available across multiple Availability Zones", challenge: "Shared file storage, NFS protocol support, fully managed service, multi-AZ availability, automatic scaling", solution: "Amazon Elastic File System (EFS) for a scalable, shared file system accessible via NFS, with regional storage classes providing multi-AZ durability", category: "Storage", domain: "Design Resilient Architectures", priority: "High"}
+        ];
+
+        const tbody = document.getElementById('questionsTable');
+
+        function renderQuestions(filteredQuestions) {
+            tbody.innerHTML = '';
+
+            filteredQuestions.forEach(q => {
+                const tr = document.createElement('tr');
+                tr.dataset.category = q.category;
+                tr.dataset.domain = q.domain;
+                tr.dataset.priority = q.priority;
+
+                let domainClass = 'domain-secure';
+                if (q.domain.includes('High-Performing')) domainClass = 'domain-performance';
+                else if (q.domain.includes('Resilient')) domainClass = 'domain-resilient';
+                else if (q.domain.includes('Cost-Optimized')) domainClass = 'domain-cost';
+
+                tr.innerHTML = `
+                    <td><span class="question-num">${q.q}</span></td>
+                    <td>${q.problem}</td>
+                    <td>${q.challenge}</td>
+                    <td>${q.solution}</td>
+                    <td><span class="category-tag">${q.category}</span></td>
+                    <td><span class="domain-badge ${domainClass}">${q.domain.replace('Design ', '')}</span></td>
+                    <td style="text-align: center;"><span class="priority-badge priority-${q.priority.toLowerCase()}">${q.priority}</span></td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+
+            updateStats(filteredQuestions);
+        }
+
+        function updateStats(filteredQuestions) {
+            const stats = {
+                secure: 0,
+                performance: 0,
+                resilient: 0,
+                cost: 0
+            };
+
+            filteredQuestions.forEach(q => {
+                if (q.domain.includes('Secure')) stats.secure++;
+                else if (q.domain.includes('High-Performing')) stats.performance++;
+                else if (q.domain.includes('Resilient')) stats.resilient++;
+                else if (q.domain.includes('Cost-Optimized')) stats.cost++;
+            });
+
+            document.getElementById('totalQuestions').textContent = filteredQuestions.length;
+            document.getElementById('secureCount').textContent = stats.secure;
+            document.getElementById('performanceCount').textContent = stats.performance;
+            document.getElementById('resilientCount').textContent = stats.resilient;
+            document.getElementById('costCount').textContent = stats.cost;
+        }
+
+        function applyFilters() {
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const domainFilter = document.getElementById('domainFilter').value;
+            const priorityFilter = document.getElementById('priorityFilter').value;
+
+            const filtered = questions.filter(q => {
+                const matchCategory = categoryFilter === 'all' || q.category === categoryFilter;
+                const matchDomain = domainFilter === 'all' || q.domain === domainFilter;
+                const matchPriority = priorityFilter === 'all' || q.priority === priorityFilter;
+
+                return matchCategory && matchDomain && matchPriority;
+            });
+
+            renderQuestions(filtered);
+        }
+
+        renderQuestions(questions);
+    </script>
+</body>
+</html>
