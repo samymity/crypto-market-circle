@@ -1,0 +1,351 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>EMTR Lego Theme Park</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: toy-box stage (3D theme park) beside a parts card; stacks on phones. */
+:root{--bg:#eef0f5;--surface:#fff;--fg:#1b2030;--muted:#596178;--line:#d9dde7;--accent:#2f6fd8;--stage-a:#fff;--stage-b:#e3e7f0;
+--display:"Rubik","Arial Rounded MT Bold",system-ui,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11141c;--surface:#1a1f2b;--fg:#e8ebf2;--muted:#9aa2b7;--line:#2a3041;--accent:#6ea0f0;--stage-a:#232a3a;--stage-b:#141822;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11141c;--surface:#1a1f2b;--fg:#e8ebf2;--muted:#9aa2b7;--line:#2a3041;--accent:#6ea0f0;--stage-a:#232a3a;--stage-b:#141822;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(24px,5vw,32px);line-height:1.1;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:760px){.grid{grid-template-columns:1fr}}
+.stage{position:relative;height:clamp(340px,58vh,560px);border-radius:14px;border:1px solid var(--line);background:radial-gradient(120% 90% at 50% 20%,var(--stage-a),var(--stage-b));overflow:hidden;touch-action:none}
+.stage canvas{display:block;width:100%;height:100%;cursor:grab}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px 10px;pointer-events:none}
+.fail{position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;font:500 13px var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 9px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sw{width:12px;height:12px;border-radius:3px;flex:none;box-shadow:inset 0 -2px 0 rgba(0,0,0,.18)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.card h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0;display:flex;align-items:center;gap:10px}
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.role,.note{margin:0}.note{font-size:13.5px;color:var(--muted)}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.items li{border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.items code{font:500 13px var(--mono);overflow-wrap:anywhere}
+.items span{display:block;color:var(--muted);font-size:13.5px}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px}
+.path b{font-weight:600;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:2px 8px}.path i{color:var(--muted);font-style:normal}
+</style>
+<div class="wrap">
+  <header><h1 id="ttl"></h1><p id="cnt"></p></header>
+  <div class="grid"><div class="stage" id="stage"><span class="hint">Drag to spin · pinch to zoom · two fingers to move · tap a brick</span></div><article class="card" id="card" aria-live="polite"></article></div>
+  <div class="chips" id="chips" role="group" aria-label="Parts"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+/* ===== FILL THESE ===== */
+const TITLE="EMTR Lego Theme Park";
+const PARTS={
+  users:{name:"Users",color:"#2f7fd1",role:"Clients in Schwab space. They log in through Schwab.com and place trades.",items:[
+    ["Schwab.com user","Client who logs in through Schwab.com and trades"],
+    ["Trade","Each trade goes to the control station for allow or block"]]},
+  employees:{name:"Employees",color:"#c2410c",role:"Schwab employees who set up EMTR and create the rules.",items:[
+    ["Employee","Comes in through the DBS portal and the BFF gate into EMTR"],
+    ["Set up EMTR","Brings accounts in from Client Central and sets EMTR up"],
+    ["Create rules","Writes rule sets in the rule service"]]},
+  books:{name:"Account Library",color:"#9a5a2c",role:"Client Central's shelves: 20 clients, one compartment each, about 1,000 account books per client.",items:[
+    ["20 clients","Each client has its own compartment on the shelves"],
+    ["1K accounts per client","About 1,000 accounts under each client, 20K in total"],
+    ["Account = book","Each account is one book on the shelf"],
+    ["EMTR setup","EMTR borrows these books across the account bridge to set up rules per account"]]},
+  rulebooks:{name:"Rule Book Library",color:"#b23a48",role:"A library inside EMTR's boundary. One rule book per client, 20 in all.",items:[
+    ["Rule book library","Building inside EMTR that keeps every client's rule book"],
+    ["20 rule books","Shown face-out on 4 shelves x 5, numbered Client 1 to Client 20"],
+    ["Book covers 1K accounts","A client's rule book applies to all ~1,000 of that client's accounts"]],
+    note:"20 and 20: each client compartment in Client Central has one matching rule book in the EMTR library. The rule service reads from it."},
+  gate:{name:"Main Gate",color:"#e0a526",role:"How visitors get into the Disney estate. Two doors, two kinds of visitor.",items:[
+    ["DBS gate app","Employees' door: the Designated Broker front-end app an employee holds"],
+    ["Schwab.com app","Users' door: clients walk in here and place trades"]]},
+  jfk:{name:"JFK Guards",color:"#d2453a",role:"Central guards for all of Schwab.com. First ID check at the park entrance.",items:[
+    ["JFK security","Platform-wide guard on every gate into Schwab.com"],
+    ["JFK guard","Red uniform: stands at the Schwab.com main gate"],
+    ["State-level ID","The token's state: the basic pass these guards read"]],
+    note:"Guards wear different uniforms by level: JFK at the estate gate, BFF at the EMTR gate, service registry at every API door."},
+  wrist:{name:"Wristband Desk",color:"#e86fa8",role:"Where you get your ticket (who you are) and your wristband (what you may see and do).",items:[
+    ["SSO app","Issues the token: tells the system who you are"],
+    ["User profile app","Returns roles, actions, entitlements and view detail, managed by EMTR"],
+    ["Policy object","Holds the user profile alongside the token"],
+    ["Browser","Visitor's pocket: carries the token and the user profile"],
+    ["Level 1 · Role","What kind of visitor you are"],
+    ["Level 2 · Actions","What you are allowed to do"],
+    ["Level 3 · Entitlements","Entitlement IDs decide which EMTR rooms open for you"],
+    ["Level 4 · View","What you get to see"]]},
+  parks:{name:"Neighbor Parks",color:"#36a3c9",role:"Other parks in the same Disney estate. EMTR talks to them over HTTP.",items:[
+    ["Client Central Park (CAT)","Source of account info: EMTR is set up by pulling accounts from CAT"],
+    ["POP web","Neighbor application block"],
+    ["NGOMS","Neighbor application block"],
+    ["Schwab.com","Subpark for the main client site; users walk from here to the gate and trade"],
+    ["HTTP between parks","Any park can call another park over HTTP"]],
+    note:"Each neighbor sits on its own island, apart from EMTR. Back row, left to right: POP web, NGOMS, Client Central Park. Schwab.com sits on the right edge. Only Client Central has a bridge into EMTR: the account feed."},
+  bff:{name:"EMTR BFF Guard",color:"#8a5cd6",role:"EMTR park's wall and gatehouse. Checks your ID again before you step into EMTR.",items:[
+    ["EMTR BFF security layer","EMTR's own security guard at its park gate"],
+    ["BFF guard","Purple uniform: two guards flank the EMTR gate"],
+    ["EMTR boundary","Wall around the EMTR park; the only way in is through the BFF gatehouse"],
+    ["Platform-level ID","The level of pass the BFF guard reads"]]},
+  registry:{name:"Registry Guards",color:"#f07d2b",role:"Guards on every door between apps and APIs. They read which state token you carry.",items:[
+    ["Service registry","API-level guard, posted everywhere apps talk to each other"],
+    ["Registry guard","Orange uniform: at the service doors and the control station"],
+    ["Interface rule","Example: 4 interfaces, each lets in the same 4 state tokens"],
+    ["Domain extra pass","A domain inside allows those 4 tokens plus 1 more"],
+    ["Exceptions","Some paths accept additional or exceptional tokens"]],
+    note:"Outer door: 4 tokens. Inner room: the same 4 + 1. Deeper rooms can be more generous, never stricter by accident."},
+  rooms:{name:"EMTR Rooms",color:"#3b7be0",role:"Units inside the EMTR boundary: services, their domains, and the APIs (resources) inside them.",items:[
+    ["Rule service","Room that holds the rules"],
+    ["User management service","Room that manages users"],
+    ["Restriction service","Room where trades are checked against restrictions"],
+    ["User domain","A domain inside a service"],
+    ["Account domain","A domain inside a service"],
+    ["Paths / APIs","The resources behind each domain"],
+    ["Create · Read · Update · Delete","What a visitor does with a resource"],
+    ["Allow / block logic","Reads the resource and returns allow or block"]]},
+  tower:{name:"EMTR Engine Tower",color:"#2e9e6e",role:"Control station. Sees all trades and says allow or block.",items:[
+    ["Control station","Sees every trade across the park, nothing passes unseen"],
+    ["EMTR engine","Checks every trade a user places"],
+    ["Rule sets","Per account and client profile: what is allowed, what is not"],
+    ["Rule-based entitlement","Macro-level authorization on trades"],
+    ["Window 1 · Employee","Employee-specific way into EMTR through the DBS portal"],
+    ["Window 2 · Trade","Trades arrive through the restriction service to be judged"]],
+    note:"The tower is one of the units inside the EMTR boundary, next to the rule, user management and restriction services. Setup comes first: the account conveyor from CAT feeds the tower its accounts, then rule sets attach to those accounts."},
+  grounds:{name:"Schwab City",color:"#4f9a3c",role:"The whole city. Every subpark is its own district, with streets in between.",items:[
+    ["Schwab City","The big base under every district and street"],
+    ["Disney = Schwab","The whole estate: every app is a subpark inside it"]]}
+};
+const ORDER=["users","employees","gate","jfk","wrist","parks","bff","registry","rooms","rulebooks","tower","books","grounds"];
+const OVERVIEW={title:"Schwab City, 55 pieces",
+  intro:"Schwab.com is the Disney estate; EMTR is one park inside it. Each colored brick is one part. Tap a brick or a chip to see what it holds.",
+  path:["Users","Main Gate","JFK Guards","Wristband Desk","EMTR BFF Guard","Registry Guards","EMTR Rooms","EMTR Engine Tower"],
+  note:"Ticket (token) says who you are. Wristband (profile) says role, actions, entitlements and view. Three guard uniforms check you on the way in."};
+function fig(part,x,z,b,shirt,pants,cap,badge){cap=cap||pants;const k=1.25,skin="#f4c430",ink="#1b1b1b",f=z+0.275*k+0.012;return [
+  /* legs + hips */
+  {part,w:0.3*k,h:0.75*k,d:0.38*k,x:x-0.17*k,y:b+0.375*k,z,color:pants},
+  {part,w:0.3*k,h:0.75*k,d:0.38*k,x:x+0.17*k,y:b+0.375*k,z,color:pants},
+  {part,w:0.7*k,h:0.15*k,d:0.38*k,x,y:b+0.825*k,z,color:pants},
+  /* torso, arms, hands */
+  {part,w:0.78*k,h:0.75*k,d:0.42*k,x,y:b+1.275*k,z,color:shirt},
+  {part,w:0.2*k,h:0.65*k,d:0.3*k,x:x-0.5*k,y:b+1.25*k,z,color:shirt},
+  {part,w:0.2*k,h:0.65*k,d:0.3*k,x:x+0.5*k,y:b+1.25*k,z,color:shirt},
+  {part,w:0.2*k,h:0.2*k,d:0.22*k,x:x-0.5*k,y:b+0.84*k,z,color:skin,shape:"cyl"},
+  {part,w:0.2*k,h:0.2*k,d:0.22*k,x:x+0.5*k,y:b+0.84*k,z,color:skin,shape:"cyl"},
+  /* neck, round head, cap */
+  {part,w:0.26*k,h:0.1*k,d:0.26*k,x,y:b+1.7*k,z,color:skin,shape:"cyl"},
+  {part,w:0.56*k,h:0.56*k,d:0.56*k,x,y:b+2.03*k,z,color:skin,shape:"cyl"},
+  {part,w:0.62*k,h:0.18*k,d:0.62*k,x,y:b+2.4*k,z,color:cap,shape:"cyl"},
+  {part,w:0.62*k,h:0.06*k,d:0.3*k,x,y:b+2.34*k,z:z+0.36*k,color:cap},
+  /* face: eyes, brows, smile */
+  {part:null,w:0.08*k,h:0.11*k,d:0.03,x:x-0.11*k,y:b+2.08*k,z:f,color:ink},
+  {part:null,w:0.08*k,h:0.11*k,d:0.03,x:x+0.11*k,y:b+2.08*k,z:f,color:ink},
+  {part:null,w:0.03*k,h:0.03*k,d:0.035,x:x-0.09*k,y:b+2.11*k,z:f+0.005,color:"#ffffff"},
+  {part:null,w:0.03*k,h:0.03*k,d:0.035,x:x+0.13*k,y:b+2.11*k,z:f+0.005,color:"#ffffff"},
+  {part:null,w:0.24*k,h:0.045*k,d:0.03,x,y:b+1.9*k,z:f,color:ink},
+  {part:null,w:0.05*k,h:0.05*k,d:0.03,x:x-0.13*k,y:b+1.93*k,z:f,color:ink},
+  {part:null,w:0.05*k,h:0.05*k,d:0.03,x:x+0.13*k,y:b+1.93*k,z:f,color:ink}].concat(badge?[
+  {part:null,w:0.16*k,h:0.16*k,d:0.03,x:x-0.2*k,y:b+1.45*k,z:z+0.21*k+0.015,color:"#ffd34d"},
+  {part:null,w:0.78*k,h:0.08*k,d:0.43*k,x,y:b+0.95*k,z,color:"#1b1b1b"}]:[]);}
+/* Districts: spread the city out. Each piece moves with its district. */
+function D(x,z){if(z<-5){if(x<-4)return[-8,-7];if(x<2)return[-1,-7];return[3,-7];}
+  if(x>9.2)return[9,1];if(x<-3.3)return[-8,1];return[3,1];}
+function shelf(cx,cz){const out=[],wood="#7a4a26",L=[0.44,0.99,1.54,2.09,2.64,3.19],cols=["#b23a48","#2f6fd8","#e0a526","#2e9e6e","#8a5cd6","#e86fa8","#36a3c9","#c2410c"];
+  const H=2.85,cy=0.4+H/2;
+  out.push({part:"books",w:2.2,h:H,d:0.1,x:cx,y:cy,z:cz-0.25,color:wood,fixed:true});
+  [cx-1.1,cx,cx+1.1].forEach((x,i)=>out.push({part:"books",w:i===1?0.06:0.1,h:H,d:0.5,x,y:cy,z:cz,color:wood,fixed:true}));
+  L.forEach(l=>out.push({part:"books",w:2.2,h:0.08,d:0.5,x:cx,y:l,z:cz,color:wood,fixed:true}));
+  /* one compartment per client: 5 shelves x 2 halves = 10 clients per bookcase */
+  let n=0;for(let s=0;s<5;s++)for(const half of [-1,1]){const c=cols[(n*3+s)%cols.length];
+    for(let i=0;i<6;i++){const x=cx+half*0.55+(i-2.5)*0.15,h=0.32+((n*7+i*11)%12)/100;
+      out.push({part:"books",w:0.12,h,d:0.38,x,y:L[s]+0.04+h/2,z:cz+0.02,color:c,fixed:true});}n++;}
+  return out;}
+function ruleLibrary(X,Z){const o=[],F=0.5,P="rulebooks",stone="#ece6f6",col="#ffffff",wood="#7a4a26";
+  o.push({part:P,w:2.8,h:0.15,d:2.9,x:X,y:F+0.075,z:Z,color:stone,fixed:true});
+  o.push({part:P,w:2.6,h:2.6,d:0.15,x:X,y:F+0.15+1.3,z:Z-1.2,color:stone,fixed:true});
+  [-1,1].forEach(sd=>o.push({part:P,w:0.15,h:2.6,d:2.4,x:X+sd*1.25,y:F+0.15+1.3,z:Z,color:stone,fixed:true}));
+  [-1,1].forEach(sd=>o.push({part:P,w:0.26,h:2.6,d:0.26,x:X+sd*1.1,y:F+0.15+1.3,z:Z+1.15,color:col,shape:"cyl",fixed:true}));
+  o.push({part:P,w:2.85,h:0.25,d:3.0,x:X,y:F+0.15+2.6+0.125,z:Z,fixed:true,studs:true});
+  /* shelves: 4 rows x 5 rule books = 20, one per client */
+  const rows=[0.72,1.32,1.92,2.52];
+  rows.forEach(l=>o.push({part:P,w:2.35,h:0.06,d:0.55,x:X,y:l,z:Z-0.85,color:wood,fixed:true}));
+  /* 20 rule books shown face-out: cover with client number, cream pages behind, spine on the side */
+  const cv=["#b23a48","#1f3a93","#2e6b4f","#7a1f2b","#8a5cd6"],page="#fbf3dc",z0=Z-0.78;
+  rows.slice().reverse().forEach((l,ri)=>{for(let i=0;i<5;i++){const n=ri*5+i+1,x=X-0.92+i*0.46,y=l+0.03+0.27,c=cv[(n-1)%cv.length];
+    o.push({part:null,w:0.36,h:0.48,d:0.12,x:x+0.01,y:y-0.01,z:z0-0.02,color:page,fixed:true});
+    o.push({part:P,w:0.4,h:0.52,d:0.04,x,y,z:z0-0.1,color:c,fixed:true});
+    o.push({part:P,w:0.04,h:0.52,d:0.2,x:x-0.2,y,z:z0,color:c,fixed:true});
+    o.push({part:P,w:0.4,h:0.52,d:0.04,x,y,z:z0+0.08,color:c,fixed:true,label:{n,c}});}});
+  return o;}
+const BRICKS=[
+  /* Schwab City base and streets (fixed: not moved into districts) */
+  {part:"grounds",w:43,h:0.4,d:27,x:2,y:-0.2,z:-4.75,fixed:true},
+  {part:null,w:43,h:0.1,d:2,x:2,y:0.05,z:7,color:"#55606e",fixed:true},
+  {part:null,w:43,h:0.1,d:2,x:2,y:0.05,z:-9,color:"#55606e",fixed:true},
+  {part:null,w:2,h:0.1,d:27,x:-6,y:0.05,z:-4.75,color:"#55606e",fixed:true},
+  {part:null,w:2,h:0.1,d:27,x:15,y:0.05,z:-4.75,color:"#55606e",fixed:true},
+  ...[...Array(20)].map((_,i)=>({part:null,w:0.9,h:0.04,d:0.14,x:-18.5+i*2.1,y:0.12,z:7,color:"#f2c94c",fixed:true})),
+  ...[...Array(20)].map((_,i)=>({part:null,w:0.9,h:0.04,d:0.14,x:-18.5+i*2.1,y:0.12,z:-9,color:"#f2c94c",fixed:true})),
+  /* Walkway from the main gate district across the street to EMTR */
+  {part:null,w:11,h:0.12,d:1.6,x:-5.8,y:0.08,z:2.5,color:"#cdbf98",fixed:true},
+  /* District plates: entry (gate) and EMTR */
+  {part:null,w:6,h:0.4,d:8,x:-6.3,y:0.2,z:0,studs:true,color:"#7fc25e"},
+  {part:null,w:12.5,h:0.4,d:8,x:2.95,y:0.2,z:0,studs:true,color:"#7fc25e"},
+  {part:null,w:5.4,h:0.1,d:1.6,x:-6.0,y:0.45,z:1.5,color:"#cdbf98"},
+  {part:null,w:3.8,h:0.1,d:1.6,x:-1.4,y:0.45,z:1.5,color:"#cdbf98"},
+  /* Main gate */
+  {part:"gate",w:1,h:4,d:1,x:-8,y:2.4,z:0.3},
+  {part:"gate",w:1,h:4,d:1,x:-8,y:2.4,z:2.7},
+  {part:"gate",w:1.2,h:1,d:3.4,x:-8,y:4.9,z:1.5,studs:true},
+  /* JFK guard booths */
+  {part:"jfk",w:1,h:1.6,d:1,x:-6.8,y:1.2,z:-0.4},
+  {part:"jfk",w:1.3,h:0.3,d:1.3,x:-6.8,y:2.15,z:-0.4,studs:true},
+  {part:"jfk",w:1,h:1.6,d:1,x:-6.8,y:1.2,z:3.4},
+  {part:"jfk",w:1.3,h:0.3,d:1.3,x:-6.8,y:2.15,z:3.4,studs:true},
+  /* Wristband desk */
+  {part:"wrist",w:1.8,h:1.2,d:1.2,x:-4.8,y:1.0,z:3.2},
+  {part:"wrist",w:0.3,h:0.8,d:0.3,x:-4.8,y:2.0,z:3.2},
+  {part:"wrist",w:2.2,h:0.3,d:1.6,x:-4.8,y:2.55,z:3.2,studs:true},
+  /* EMTR boundary: own floor + wall on all sides, one gap at the BFF gate */
+  {part:null,w:8.4,h:0.1,d:7.6,x:4.7,y:0.45,z:0,color:"#cbbfe8"},
+  {part:"bff",w:8.7,h:1,d:0.35,x:4.7,y:0.9,z:-3.8},
+  {part:"bff",w:8.7,h:1,d:0.35,x:4.7,y:0.9,z:3.8},
+  {part:"bff",w:0.35,h:1,d:7.95,x:8.9,y:0.9,z:0},
+  {part:"bff",w:0.35,h:1,d:3.9,x:0.5,y:0.9,z:-1.85},
+  {part:"bff",w:0.35,h:1,d:0.9,x:0.5,y:0.9,z:3.35},
+  /* BFF gatehouse */
+  {part:"bff",w:0.8,h:3,d:0.8,x:0.5,y:1.9,z:0.5},
+  {part:"bff",w:0.8,h:3,d:0.8,x:0.5,y:1.9,z:2.5},
+  {part:"bff",w:1,h:0.8,d:2.8,x:0.5,y:3.8,z:1.5,studs:true},
+  /* EMTR rooms */
+  {part:"rooms",w:2,h:2.5,d:2,x:2.6,y:1.65,z:1.3,studs:true},
+  /* Rule Book Library inside EMTR: 20 rule books, one per client */
+  ...ruleLibrary(5.12,-0.9),
+  {part:"rooms",w:2,h:3.2,d:2,x:5.1,y:2.0,z:1.3},
+  {part:"rooms",w:0.9,h:0.8,d:0.9,x:4.6,y:4.0,z:0.85,studs:true},
+  {part:"rooms",w:0.9,h:0.8,d:0.9,x:5.6,y:4.0,z:1.75,studs:true},
+  {part:"rooms",w:1.8,h:2,d:2,x:7.6,y:1.4,z:1.3,studs:true},
+  /* Registry guard posts */
+  {part:"registry",w:0.45,h:1.4,d:0.45,x:2.6,y:1.1,z:2.9},
+  {part:"registry",w:0.45,h:1.4,d:0.45,x:5.1,y:1.1,z:2.9},
+  {part:"registry",w:0.45,h:1.4,d:0.45,x:7.6,y:1.1,z:2.9},
+  {part:"registry",w:0.45,h:1.4,d:0.45,x:6.35,y:1.1,z:1.3},
+  /* Neighbor parks: separate islands across the Disney estate */
+  {part:null,w:3.6,h:0.4,d:3,x:-6.2,y:0.2,z:-7.5,studs:true,color:"#8fc46f"},
+  {part:"parks",w:1.6,h:3,d:1.6,x:-6.2,y:1.9,z:-7.5,studs:true},
+  {part:null,w:3.6,h:0.4,d:3,x:-1.2,y:0.2,z:-7.5,studs:true,color:"#8fc46f"},
+  {part:"parks",w:2,h:1.6,d:2,x:-1.2,y:1.2,z:-7.5,studs:true},
+  {part:null,w:6,h:0.4,d:4,x:4.6,y:0.2,z:-7.5,studs:true,color:"#8fc46f"},
+  {part:"parks",w:2,h:2.2,d:1.6,x:4.6,y:1.5,z:-7.5,studs:true},
+  /* Client Central account library: two bookcases, every book is an account */
+  ...shelf(6.0,-13.0),...shelf(9.2,-13.0),
+  /* Schwab.com subpark */
+  {part:null,w:3.2,h:0.4,d:3.6,x:10.4,y:0.2,z:-2.6,studs:true,color:"#8fc46f"},
+  {part:"parks",w:2,h:3.6,d:2,x:10.4,y:2.2,z:-2.6,studs:true},
+  /* Account bridge: CAT park feeds accounts to the EMTR tower */
+  {part:"parks",w:0.6,h:0.3,d:10.4,x:7.6,y:0.35,z:-7.9,fixed:true},
+  /* Lego people: users trading, employees setting up EMTR */
+  ...fig("users",10.6,-0.9,0.4,"#2f7fd1","#24456e"),
+  ...fig("users",-7.3,1.5,0.5,"#2f7fd1","#24456e"),
+  ...fig("employees",3.7,2.95,0.5,"#c2410c","#3a3a46"),
+  ...fig("employees",-2.2,1.5,0.5,"#c2410c","#3a3a46"),
+  /* Security guards: red JFK, purple BFF, orange service registry */
+  ...fig("jfk",-5.5,-0.4,0.4,"#d2453a","#2b2b33","#7a1f19",true),
+  ...fig("bff",-0.6,-0.1,0.4,"#8a5cd6","#2b2b33","#4b2f86",true),
+  ...fig("bff",-0.6,3.1,0.4,"#8a5cd6","#2b2b33","#4b2f86",true),
+  ...fig("registry",6.35,2.95,0.5,"#f07d2b","#2b2b33","#9a4a10",true),
+  ...fig("registry",6.8,-2.3,0.5,"#f07d2b","#2b2b33","#9a4a10",true),
+  /* EMTR engine tower */
+  {part:"tower",w:2,h:6,d:2,x:4.6,y:3.4,z:-2.3},
+  {part:"tower",w:1.4,h:3,d:1.4,x:4.6,y:7.9,z:-2.3},
+  {part:"tower",w:2.4,h:1.2,d:2.4,x:4.6,y:10.0,z:-2.3,studs:true},
+  {part:"tower",w:0.2,h:1.5,d:0.2,x:4.6,y:11.4,z:-2.3}
+];
+BRICKS.forEach(b=>{if(b.fixed)return;const o=D(b.x,b.z);b.x+=o[0];b.z+=o[1];});
+/* ===== ENGINE (no edits needed) ===== */
+const card=document.getElementById("card"),chips=document.getElementById("chips");
+document.getElementById("ttl").textContent=TITLE;
+const total=ORDER.reduce((n,k)=>n+PARTS[k].items.length,0);
+document.getElementById("cnt").textContent=`${total} items · ${ORDER.length} parts · one park`;
+let selected=null,highlight=()=>{};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function renderCard(){
+  if(!selected){card.innerHTML=`<p class="eyebrow">Overview</p><h2>${esc(OVERVIEW.title)}</h2><p class="role">${esc(OVERVIEW.intro)}</p>`+
+    (OVERVIEW.path.length?`<p class="eyebrow">Main path</p><div class="path">${OVERVIEW.path.map(esc).map(p=>`<b>${p}</b>`).join("<i>→</i>")}</div>`:"")+
+    (OVERVIEW.note?`<p class="note">${esc(OVERVIEW.note)}</p>`:"");}
+  else{const p=PARTS[selected];card.innerHTML=`<p class="eyebrow">${p.items.length} item${p.items.length>1?"s":""}</p><h2><span class="sw" style="background:${p.color};width:16px;height:16px"></span>${esc(p.name)}</h2><p class="role">${esc(p.role)}</p><ul class="items">${p.items.map(r=>`<li><code>${esc(r[0])}</code><span>${esc(r[1])}</span></li>`).join("")}</ul>${p.note?`<p class="note">${esc(p.note)}</p>`:""}`;}
+  chips.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.part===selected)));
+}
+function select(k){selected=(k===selected)?null:k;renderCard();highlight();}
+ORDER.forEach(k=>{const b=document.createElement("button");b.className="chip";b.type="button";b.dataset.part=k;b.id="chip-"+k;b.innerHTML=`<span class="sw" style="background:${PARTS[k].color}"></span>${esc(PARTS[k].name)}`;b.onclick=()=>select(k);chips.appendChild(b);});
+renderCard();
+(function(){
+  const stage=document.getElementById("stage");
+  if(!window.THREE||!THREE.OrbitControls){stage.insertAdjacentHTML("beforeend",'<div class="fail">The 3D view could not load. The parts list below still works.</div>');return;}
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(38,1,0.1,400);camera.position.set(30,30,42);
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.prepend(renderer.domElement);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x8890a0,0.75));
+  const sun=new THREE.DirectionalLight(0xffffff,0.85);sun.position.set(18,36,22);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-30,right:30,top:30,bottom:-30,near:1,far:110});scene.add(sun);
+  const fill=new THREE.DirectionalLight(0xffffff,0.25);fill.position.set(-12,8,-10);scene.add(fill);
+  const meshes={},pick=[],studGeo=new THREE.CylinderGeometry(0.3,0.3,0.22,20);
+  const mat=(hex,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:hex,roughness:0.36,metalness:0},o));
+  function add(part,geo,m,x,y,z,b){const me=new THREE.Mesh(geo,m);me.position.set(x,y,z);if(b.rotZ)me.rotation.z=b.rotZ;if(b.rotY)me.rotation.y=b.rotY;me.castShadow=me.receiveShadow=true;me.userData={part,baseY:y};scene.add(me);if(part){(meshes[part]=meshes[part]||[]).push(me);pick.push(me);}}
+  BRICKS.forEach(b=>{const hex=b.color||(b.part&&PARTS[b.part].color)||"#9aa3ad";
+    let m=b.see?mat(hex,{transparent:true,opacity:0.42,depthWrite:false}):mat(hex);
+    if(b.label){const cv=document.createElement("canvas");cv.width=256;cv.height=320;const g=cv.getContext("2d");
+      g.fillStyle=b.label.c;g.fillRect(0,0,256,320);g.strokeStyle="#e9c46a";g.lineWidth=10;g.strokeRect(14,14,228,292);
+      g.fillStyle="#e9c46a";g.textAlign="center";g.font="600 34px Rubik, Arial, sans-serif";g.fillText("RULE BOOK",128,92);
+      g.font="700 120px Rubik, Arial, sans-serif";g.fillText(String(b.label.n),128,222);
+      g.font="600 30px Rubik, Arial, sans-serif";g.fillText("CLIENT",128,282);
+      const t=new THREE.CanvasTexture(cv);t.encoding=THREE.sRGBEncoding;t.anisotropy=4;
+      const front=mat("#ffffff",{map:t});m=[m,m,m,m,front,m];}
+    add(b.part,b.shape==="cyl"?new THREE.CylinderGeometry(b.w/2,b.w/2,b.h,28):new THREE.BoxGeometry(b.w,b.h,b.d),m,b.x,b.y,b.z,b);
+    if(b.studs){const nx=Math.max(1,Math.floor(b.w)),nz=Math.max(1,Math.floor(b.d)),sm=b.see?mat(hex):m;
+      for(let i=0;i<nx;i++)for(let j=0;j<nz;j++)add(b.part,studGeo,sm,b.x-(nx-1)/2+i,b.y+b.h/2+0.11,b.z-(nz-1)/2+j,{});}});
+  /* Signs: floating labels that always face the camera */
+  function makeSign(text,color,cw,font,x,y,z,sw,sh,post){if(!(post&&post.fixed)){const o=D(x,z);x+=o[0];z+=o[1];}const c=document.createElement("canvas");c.width=cw;c.height=256;const g=c.getContext("2d");
+    const r=48,W=cw-8;g.fillStyle=color;g.beginPath();g.moveTo(r,8);g.arcTo(W,8,W,248,r);g.arcTo(W,248,8,248,r);g.arcTo(8,248,8,8,r);g.arcTo(8,8,W,8,r);g.closePath();g.fill();
+    g.lineWidth=12;g.strokeStyle="#ffffff";g.stroke();
+    g.fillStyle="#ffffff";g.font="700 "+font+"px Rubik, 'Arial Rounded MT Bold', Arial, sans-serif";g.textAlign="center";g.textBaseline="middle";g.fillText(text,cw/2,136);
+    const tex=new THREE.CanvasTexture(c);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=4;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true}));sp.scale.set(sw,sh,1);sp.position.set(x,y,z);scene.add(sp);
+    if(post&&post.h){const p=new THREE.Mesh(new THREE.BoxGeometry(0.15,post.h,0.15),mat(color));p.position.set(x,post.y,z);scene.add(p);}}
+  makeSign("EMTR PARK","#8a5cd6",1024,132,0.5,5.3,1.5,4.4,1.1,null);
+  makeSign("RULE SERVICE","#3b7be0",1024,120,2.6,3.6,1.3,3.0,0.75,null);
+  makeSign("RULE BOOK LIBRARY","#b23a48",1280,112,5.12,4.5,-0.9,3.6,0.7,{fixed:true});
+  makeSign("USER MGMT","#3b7be0",1024,132,5.1,5.1,1.3,3.0,0.75,null);
+  makeSign("RESTRICTION","#3b7be0",1024,120,7.6,3.1,1.3,3.0,0.75,null);
+  makeSign("TRADE CONTROL STATION","#2e9e6e",1536,112,4.6,12.9,-2.3,7.2,1.2,null);
+  makeSign("SCHWAB.COM","#36a3c9",1024,132,10.4,5.0,-2.6,3.6,0.9,null);
+  makeSign("SCHWAB CITY","#4f9a3c",1024,132,2,1.6,9.3,6.4,1.6,{fixed:true});
+  makeSign("TRADER","#2f7fd1",1024,150,10.6,4.2,-0.9,1.9,0.48,null);
+  makeSign("TRADER","#2f7fd1",1024,150,-7.3,4.3,1.5,1.9,0.48,null);
+  makeSign("EMPLOYEE","#c2410c",1024,140,3.7,4.3,2.95,2.1,0.52,null);
+  makeSign("EMPLOYEE","#c2410c",1024,140,-2.2,4.6,1.5,2.1,0.52,null);
+  makeSign("JFK GUARD","#d2453a",1024,130,-5.5,4.1,-0.4,2.2,0.55,null);
+  makeSign("BFF GUARD","#8a5cd6",1024,130,-0.6,4.1,-0.1,2.2,0.55,null);
+  makeSign("REGISTRY GUARD","#f07d2b",1280,120,6.35,4.2,2.95,2.7,0.55,null);
+  makeSign("POP WEB","#36a3c9",1024,132,-6.2,4.3,-7.5,3.6,0.9,null);
+  makeSign("NGOMS","#36a3c9",1024,132,-1.2,2.9,-7.5,3.6,0.9,null);
+  makeSign("CLIENT CENTRAL PARK","#36a3c9",1536,112,4.6,5.0,-7.5,5.4,0.9,null);
+  makeSign("20 CLIENTS × 1K ACCOUNTS","#9a5a2c",1536,104,7.6,3.95,-12.4,5.2,0.8,{fixed:true});
+  const controls=new THREE.OrbitControls(camera,renderer.domElement);controls.target.set(2,2.5,-4.5);controls.enableDamping=true;controls.enablePan=true;controls.minDistance=10;controls.maxDistance=110;controls.maxPolarAngle=1.48;controls.autoRotate=!reduce;controls.autoRotateSpeed=1.1;controls.addEventListener("start",()=>controls.autoRotate=false);
+  highlight=()=>Object.entries(meshes).forEach(([k,list])=>{const on=k===selected,dim=selected&&!on;list.forEach(me=>{(Array.isArray(me.material)?me.material:[me.material]).forEach(m=>{m.emissive.set(on?PARTS[k].color:"#000");m.emissiveIntensity=on?0.35:0;if(m.userData.base===undefined)m.userData.base=m.opacity;m.transparent=true;m.opacity=dim?Math.min(0.28,m.userData.base):m.userData.base;});if(!on)me.position.y=me.userData.baseY;});});
+  const ray=new THREE.Raycaster(),ptr=new THREE.Vector2();let down=null;
+  renderer.domElement.addEventListener("pointerdown",e=>down={x:e.clientX,y:e.clientY});
+  renderer.domElement.addEventListener("pointerup",e=>{if(!down)return;const mv=Math.hypot(e.clientX-down.x,e.clientY-down.y);down=null;if(mv>6)return;const r=renderer.domElement.getBoundingClientRect();ptr.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(ptr,camera);const h=ray.intersectObjects(pick,false)[0];if(h)select(h.object.userData.part);else if(selected)select(selected);});
+  function size(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<520?48:38;camera.updateProjectionMatrix();}
+  new ResizeObserver(size).observe(stage);size();
+  const clock=new THREE.Clock();(function loop(){const t=clock.getElapsedTime();if(selected&&!reduce&&meshes[selected])meshes[selected].forEach(me=>me.position.y=me.userData.baseY+Math.abs(Math.sin(t*3))*0.18);controls.update();renderer.render(scene,camera);requestAnimationFrame(loop);})();
+})();
+</script>
+
+</body></html>
